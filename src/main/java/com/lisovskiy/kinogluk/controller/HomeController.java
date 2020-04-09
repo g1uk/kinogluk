@@ -1,4 +1,4 @@
-package com.lisovskiy.kinogluk;
+package com.lisovskiy.kinogluk.controller;
 
 
 import org.springframework.beans.factory.annotation.Value;

@@ -1,0 +1,11 @@
+package com.lisovskiy.kinogluk.service;
+
+import com.lisovskiy.kinogluk.entity.Catalog;
+
+import java.util.List;
+
+public interface CatalogService {
+
+    List<Catalog> findAll();
+    Catalog save (Catalog catalog);
+}
