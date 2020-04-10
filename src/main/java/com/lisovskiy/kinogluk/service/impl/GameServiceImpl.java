@@ -1,5 +1,6 @@
 package com.lisovskiy.kinogluk.service.impl;
 
+import com.lisovskiy.kinogluk.NotFoundException;
 import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.service.GameService;
@@ -22,8 +23,14 @@ public class GameServiceImpl implements GameService {
     @Override
     public void deleteById(int id) { gameRepository.deleteById(id); }
 
-//    @Override
-//    public Game getByTitle(String title) { return gameRepository.findbyTitle(title); }
+    @Override
+    public Game findByTitle(String title) {
+        Game game = gameRepository.findByTitle(title);
+        if (game == null) {
+            throw new NotFoundException(title);
+        }
+        return game;
+    }
 
     @Override
     public Game edit(Game game) {

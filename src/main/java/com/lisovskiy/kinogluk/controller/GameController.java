@@ -23,9 +23,9 @@ public class GameController {
     }
 
     @GetMapping("/game/title/{gameTitle}")
-    public String findByTitle(@PathVariable String gameTitle) {
+    public Game findByTitle(@PathVariable String gameTitle) {
 
-        return "Игра, которую вы искали: " + gameTitle;
+        return gameService.findByTitle(gameTitle);
     }
 
     @PostMapping ("/game/{id}")

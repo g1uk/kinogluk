@@ -9,7 +9,8 @@ public interface GameService {
     Game save(Game game);
     void deleteById(int id);
 
-    //Game getByTitle (String title);
+    Game findByTitle(String title);
+
     Game edit (Game game);
     List<Game> findAll();
 }

@@ -14,7 +14,7 @@ import javax.validation.ConstraintViolationException;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ GameNotFoundException.class })
+    @ExceptionHandler({ NotFoundException.class })
     protected ResponseEntity<Object> handleNotFound(
             Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, "Game not found",

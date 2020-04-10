@@ -14,7 +14,7 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
     Game save(Game game);
 
     void deleteById (int id);
-    //Games findbyTitle(String title);
+    Game findByTitle(String title);
     //@Nonnull
     List<Game> findAll();
 
