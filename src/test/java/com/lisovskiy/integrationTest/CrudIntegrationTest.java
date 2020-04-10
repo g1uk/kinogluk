@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class ConnectionToDBIntegrationTest {
+public class CrudIntegrationTest {
 
     @Autowired
     GameRepository gameRepository;
@@ -51,10 +51,12 @@ public class ConnectionToDBIntegrationTest {
     GenreServiceImpl genreService;
 
     @Test
-    public void createCatalog() {
+    public void CrudTestCatalog() {
         catalogRepository.deleteAll();
         Catalog catalog = new Catalog();
         catalog.setTitle("Test Catalog");
+        catalogService.save(catalog);
+        catalog.setTitle("UpdateTest Catalog");
         catalogService.save(catalog);
         List<Catalog> catalogs = catalogService.findAll();
         assertEquals(1, catalogs.size());
@@ -63,10 +65,12 @@ public class ConnectionToDBIntegrationTest {
     }
 
     @Test
-    public void createCompany() {
+    public void CrudTestCompany() {
         companyRepository.deleteAll();
         Company company = new Company();
         company.setCompany("Test Company");
+        companyService.save(company);
+        company.setCompany("UpdateCompany Test");
         companyService.save(company);
         List<Company> companies = companyService.findAll();
         assertEquals(1, companies.size());
@@ -74,10 +78,12 @@ public class ConnectionToDBIntegrationTest {
     }
 
     @Test
-    public void createGenre() {
+    public void CrudTestGenre() {
         genreRepository.deleteAll();
         Genre genre = new Genre();
         genre.setTitle("Test Genre");
+        genreService.save(genre);
+        genre.setTitle("UpdateTest Genre");
         genreService.save(genre);
         List<Genre> genres = genreService.findAll();
         assertEquals(1, genres.size());
@@ -85,13 +91,15 @@ public class ConnectionToDBIntegrationTest {
     }
 
     @Test
-    public void createGame() {
+    public void CrudTestGame() {
         gameRepository.deleteAll();
         Game game = new Game();
         game.setTitle("Test Game");
         game.setReleaseYear(new Date());
         game.setRating(8);
         game.setShortDescription("Test Description");
+        gameService.save(game);
+        game.setTitle("UpdateTest Game");
         gameService.save(game);
         List<Game> games = gameService.findAll();
         assertEquals(1, games.size());
