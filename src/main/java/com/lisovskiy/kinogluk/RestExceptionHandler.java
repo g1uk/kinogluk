@@ -14,12 +14,12 @@ import javax.validation.ConstraintViolationException;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ NotFoundException.class })
-    protected ResponseEntity<Object> handleNotFound(
-            Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex, "Game not found",
-                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-    }
+//    @ExceptionHandler({ NotFoundException.class })
+//    protected ResponseEntity<Object> handleNotFound(
+//            Exception ex, WebRequest request) {
+//        return handleExceptionInternal(ex, "Game not found",
+//                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+//    }
 
     @ExceptionHandler({ GameIdMismatchException.class,
             ConstraintViolationException.class,

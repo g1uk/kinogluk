@@ -23,10 +23,7 @@ public class GameController {
     }
 
     @GetMapping("/game/title/{gameTitle}")
-    public Game findByTitle(@PathVariable String gameTitle) {
-
-        return gameService.findByTitle(gameTitle);
-    }
+    public Game findByTitle(@PathVariable("gameTitle") String title) { return gameService.findByTitle(title); }
 
     @PostMapping ("/game/{id}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,16 +37,11 @@ public class GameController {
     }
 
     @GetMapping("/game/{idDelete}")
-    public void deleteById(@PathVariable int id) { gameService.deleteById(id);
-    }
+    public void deleteById(@PathVariable int id) { gameService.deleteById(id); }
 
     @GetMapping("/game/{gameTitle}")
-    public String deleteByTitle(@PathVariable String gameTitle) {
-        return "Игра " + gameTitle + " удалена из библиотеки.";
-    }
+    public String deleteByTitle(@PathVariable String gameTitle) { return "Игра " + gameTitle + " удалена из библиотеки."; }
 
     @GetMapping("/game/{id}/")
-    public String ratingUpdate (@RequestBody Game game, @PathVariable int id) {
-        return "Спасибо за Вашу оценку.";
-    }
+    public String ratingUpdate (@RequestBody Game game, @PathVariable int id) { return "Спасибо за Вашу оценку."; }
 }

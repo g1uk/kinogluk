@@ -1,7 +1,7 @@
 package com.lisovskiy.kinogluk.service.impl;
 
-import com.lisovskiy.kinogluk.NotFoundException;
 import com.lisovskiy.kinogluk.entity.Game;
+import com.lisovskiy.kinogluk.exceptions.GameNotFoundException;
 import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.service.GameService;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class GameServiceImpl implements GameService {
     public Game findByTitle(String title) {
         Game game = gameRepository.findByTitle(title);
         if (game == null) {
-            throw new NotFoundException(title);
+            throw new GameNotFoundException(title);
         }
         return game;
     }
