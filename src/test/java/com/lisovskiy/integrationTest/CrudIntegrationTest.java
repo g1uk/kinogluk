@@ -68,13 +68,13 @@ public class CrudIntegrationTest {
     public void CrudTestCompany() {
         companyRepository.deleteAll();
         Company company = new Company();
-        company.setCompany("Test Company");
+        company.setTitle("Test Company");
         companyService.save(company);
-        company.setCompany("UpdateCompany Test");
+        company.setTitle("UpdateCompany Test");
         companyService.save(company);
         List<Company> companies = companyService.findAll();
         assertEquals(1, companies.size());
-        System.out.println(companies.get(0).getCompany());
+        System.out.println(companies.get(0).getTitle());
     }
 
     @Test

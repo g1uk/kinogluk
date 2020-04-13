@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.exceptions.CompanyNotFoundException;
 import com.lisovskiy.kinogluk.repository.CompanyRepository;
 import com.lisovskiy.kinogluk.service.CompanyService;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company save(Company company) { return companyRepository.save(company); }
+
+    @Override
+    public Company findByTitle(String title) {
+        Company company = companyRepository.findByTitle(title);
+        if (company == null) {
+            throw new CompanyNotFoundException(title);
+        }
+        return company;
+    }
 }

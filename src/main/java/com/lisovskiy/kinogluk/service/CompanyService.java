@@ -8,4 +8,6 @@ public interface CompanyService {
 
     List<Company> findAll();
     Company save (Company company);
+
+    Company findByTitle(String title);
 }

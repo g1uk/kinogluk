@@ -17,9 +17,9 @@ public class CompanyController {
     @GetMapping("/company")
     public List<Company> findAll () {return companyService.findAll();}
 
-    @GetMapping("/game/{companyTitle}")
-    public String findByTitle (@PathVariable("companyTitle") String companyTitle) {
-        return "Данную игру разработала: " + companyTitle;
+    @GetMapping("/company/{companyTitle}")
+    public Company findByTitle (@PathVariable("companyTitle") String title) {
+        return companyService.findByTitle(title);
     }
 
     @PostMapping("company/{id}")

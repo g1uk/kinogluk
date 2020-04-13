@@ -13,8 +13,8 @@ public class Company {
     @Column(name = "company_id", nullable = false)
     private int companyId;
 
-    @Column(name = "company", nullable = false, length = 50)
-    private String company;
+    @Column(name = "title", nullable = false, length = 50)
+    private String title;
 
     @OneToMany(mappedBy = "company")
     private List<Game> games;
@@ -22,8 +22,8 @@ public class Company {
     public Company() {
     }
 
-    public Company(String company) {
-        this.company = company;
+    public Company(String title) {
+        this.title = title;
     }
 
     public List<Game> getGames() {
@@ -34,12 +34,12 @@ public class Company {
         this.games = games;
     }
 
-    public String getCompany() {
-        return company;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setTitle(String company) {
+        this.title = company;
     }
 
     public int getCompanyId() {
@@ -52,12 +52,12 @@ public class Company {
         if (o == null || getClass() != o.getClass()) return false;
         Company company1 = (Company) o;
         return companyId == company1.companyId &&
-                company.equals(company1.company) &&
+                title.equals(company1.title) &&
                 games.equals(company1.games);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(companyId, company, games);
+        return Objects.hash(companyId, title, games);
     }
 }

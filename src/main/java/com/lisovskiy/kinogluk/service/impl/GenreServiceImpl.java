@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.exceptions.GenreNotFoundException;
 import com.lisovskiy.kinogluk.repository.GenreRepository;
 import com.lisovskiy.kinogluk.service.GenreService;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,13 @@ public class GenreServiceImpl implements GenreService {
 
     public List<Genre> findAll() { return genreRepository.findAll(); }
 
-    public Genre getByTitle (String title) { return genreRepository.findByTitle(title); }
+    public Genre findByTitle (String title) {
+        Genre genre = genreRepository.findByTitle(title);
+        if (genre == null) {
+            throw new GenreNotFoundException(title);
+        }
+        return genre;
+    }
 
     public Genre save (Genre genre) {return genreRepository.save(genre);}
 }

@@ -19,8 +19,13 @@ public class CatalogController {
     @GetMapping("/catalog")
     public List<Catalog> findAll () {return catalogService.findAll();}
 
-    @PostMapping("/game/{catalogId}")
+    @PostMapping("/catalog/{catalogId}")
     public Catalog add (@RequestBody Catalog catalog) {
         return catalogService.save(catalog);
+    }
+
+    @GetMapping("/catalog/{catalogTitle}")
+    public Catalog findByTitle (@PathVariable("catalogTitle") String title) {
+        return catalogService.findByTitle(title);
     }
 }

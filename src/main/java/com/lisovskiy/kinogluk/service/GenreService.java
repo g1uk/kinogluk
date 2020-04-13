@@ -9,5 +9,5 @@ public interface GenreService {
 
 List<Genre> findAll();
 Genre save (Genre genre);
-Genre getByTitle (String title);
+Genre findByTitle (String title);
 }

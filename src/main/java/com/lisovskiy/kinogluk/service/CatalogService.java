@@ -8,4 +8,6 @@ public interface CatalogService {
 
     List<Catalog> findAll();
     Catalog save (Catalog catalog);
+
+    Catalog findByTitle(String title);
 }

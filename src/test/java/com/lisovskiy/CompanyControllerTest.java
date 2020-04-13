@@ -23,7 +23,7 @@ public class CompanyControllerTest {
 
     public Company createRandomCompany() {
         Company company = new Company();
-        company.setCompany(randomAlphabetic(10));
+        company.setTitle(randomAlphabetic(10));
         return company;
     }
 

@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.exceptions.CatalogNotFoundException;
 import com.lisovskiy.kinogluk.repository.CatalogRepository;
 import com.lisovskiy.kinogluk.service.CatalogService;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,14 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public Catalog save (Catalog catalog) {
         return catalogRepository.save(catalog);
+    }
+
+    @Override
+    public Catalog findByTitle(String title) {
+        Catalog catalog = catalogRepository.findByTitle(title);
+        if (catalog == null) {
+            throw new CatalogNotFoundException(title);
+        }
+        return catalog;
     }
 }

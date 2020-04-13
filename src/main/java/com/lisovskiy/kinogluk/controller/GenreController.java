@@ -17,11 +17,11 @@ public class GenreController {
     @GetMapping("/genre")
     public List<Genre> findAll () {return genreService.findAll();}
 
-    @GetMapping("/game/{genreTitle}")
-    public String findByTitle (@PathVariable String genreTitle) {
-        return "Все игры в жанре " + genreTitle;
+    @GetMapping("/genre/{genreTitle}")
+    public Genre findByTitle (@PathVariable("genreTitle") String title) {
+        return genreService.findByTitle(title);
     }
 
-    @PostMapping("/game/{genreId")
+    @PostMapping("/genre/{genreId")
     public Genre add (@RequestBody Genre genre) {return genreService.save(genre);}
 }
