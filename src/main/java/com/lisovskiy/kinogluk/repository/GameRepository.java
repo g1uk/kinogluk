@@ -9,13 +9,14 @@ import java.util.List;
 @Repository
 public interface GameRepository extends CrudRepository<Game, Integer> {
 
-    @SuppressWarnings("unchecked")
-    //@Nonnull
     Game save(Game game);
 
     void deleteById (int id);
+
     Game findByTitle(String title);
-    //@Nonnull
+
     List<Game> findAll();
+
+    Game findByRating(int rating);
 
 }

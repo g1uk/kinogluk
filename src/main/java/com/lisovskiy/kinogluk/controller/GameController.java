@@ -25,19 +25,25 @@ public class GameController {
     @GetMapping("/game/title/{gameTitle}")
     public Game findByTitle(@PathVariable("gameTitle") String title) { return gameService.findByTitle(title); }
 
-    @PostMapping ("/game/{id}")
+    @GetMapping("/game/rating/{ratingCount:\\d+}")
+    public Game findByRating(@PathVariable("ratingCount") int rating) {
+        return gameService.findByRating(rating);
+    }
+
+    @PostMapping ("/game")
     @ResponseStatus(HttpStatus.CREATED)
     public Game add(@RequestBody Game game) {
         return gameService.save(game);
     }
 
-    @PostMapping ("/game/{idUpdate}")
-    public Game update(@RequestBody Game game) {
-        return gameService.edit(game);
+    @PostMapping ("/game/{gameId}")
+    public Game edit(@PathVariable("gameId") int id, @RequestBody Game game) {
+        return gameService.edit(id, game);
     }
 
-    @GetMapping("/game/{idDelete}")
-    public void deleteById(@PathVariable int id) { gameService.deleteById(id); }
+    @PostMapping("/game/delete/{gameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable("gameId") int id) { gameService.deleteById(id); }
 
     @GetMapping("/game/{gameTitle}")
     public String deleteByTitle(@PathVariable String gameTitle) { return "Игра " + gameTitle + " удалена из библиотеки."; }

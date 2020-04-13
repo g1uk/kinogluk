@@ -83,7 +83,7 @@ public class GameControllerTest {
         game.setShortDescription("nice game");
         game.setReleaseYear(new Date());
         game.setTitle("Warcraft");
-        assertEquals(game, gameController.update(game));
+        assertEquals(game, gameController.edit(game.getGameId(), game));
     }
 
     @Test

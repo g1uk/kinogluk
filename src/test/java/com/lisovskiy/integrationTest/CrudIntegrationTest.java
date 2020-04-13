@@ -70,7 +70,7 @@ public class CrudIntegrationTest {
         Company company = new Company();
         company.setTitle("Test Company");
         companyService.save(company);
-        company.setTitle("UpdateCompany Test");
+        company.setTitle("UpdateTest Company");
         companyService.save(company);
         List<Company> companies = companyService.findAll();
         assertEquals(1, companies.size());
@@ -98,6 +98,8 @@ public class CrudIntegrationTest {
         game.setReleaseYear(new Date());
         game.setRating(8);
         game.setShortDescription("Test Description");
+        game.setCatalog(catalogService.findByTitle("UpdateTest Catalog"));
+        game.setCompany(companyService.findByTitle("UpdateTest Company"));
         gameService.save(game);
         game.setTitle("UpdateTest Game");
         gameService.save(game);

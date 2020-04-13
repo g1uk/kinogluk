@@ -21,7 +21,11 @@ public class GameServiceImpl implements GameService {
     public Game save (Game game) { return gameRepository.save(game); }
 
     @Override
-    public void deleteById(int id) { gameRepository.deleteById(id); }
+    public void deleteById(int id) {
+        if (!gameRepository.existsById(id)) {
+            throw new GameNotFoundException(id);
+        }
+        gameRepository.deleteById(id); }
 
     @Override
     public Game findByTitle(String title) {
@@ -33,8 +37,22 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game edit(Game game) {
+    public Game edit(int id, Game game) {
+        if (!gameRepository.existsById(id)) {
+            throw new GameNotFoundException(id);
+        }
+        game.setGameId(id);
+        game.setTitle(game.getTitle());
         return gameRepository.save(game);
+    }
+
+    @Override
+    public Game findByRating(int rating) {
+        Game game = gameRepository.findByRating(rating);
+        if (game == null) {
+            throw new GameNotFoundException(rating);
+        }
+        return game;
     }
 
     @Override

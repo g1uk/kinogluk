@@ -7,10 +7,14 @@ import java.util.List;
 public interface GameService {
 
     Game save(Game game);
+
     void deleteById(int id);
 
     Game findByTitle(String title);
 
-    Game edit (Game game);
+    Game edit(int id, Game game);
+
+    Game findByRating(int rating);
+
     List<Game> findAll();
 }
