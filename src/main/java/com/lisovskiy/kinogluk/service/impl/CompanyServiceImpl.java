@@ -31,4 +31,9 @@ public class CompanyServiceImpl implements CompanyService {
         }
         return company;
     }
+
+    @Override
+    public void deleteAll() {
+        companyRepository.deleteAll();
+    }
 }

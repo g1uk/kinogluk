@@ -10,4 +10,6 @@ public interface CatalogService {
     Catalog save (Catalog catalog);
 
     Catalog findByTitle(String title);
+
+    void deleteAll();
 }

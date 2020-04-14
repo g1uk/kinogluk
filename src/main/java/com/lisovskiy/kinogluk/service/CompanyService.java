@@ -10,4 +10,6 @@ public interface CompanyService {
     Company save (Company company);
 
     Company findByTitle(String title);
+
+    void deleteAll();
 }

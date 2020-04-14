@@ -28,4 +28,6 @@ public class GenreServiceImpl implements GenreService {
     }
 
     public Genre save (Genre genre) {return genreRepository.save(genre);}
+
+    public void deleteAll() { genreRepository.deleteAll(); }
 }

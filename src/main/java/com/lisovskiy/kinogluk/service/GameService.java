@@ -14,7 +14,9 @@ public interface GameService {
 
     Game edit(int id, Game game);
 
-    Game findByRating(int rating);
+    List<Game> findByRating(int from, int to);
 
     List<Game> findAll();
+
+    void deleteAll();
 }

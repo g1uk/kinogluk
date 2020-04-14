@@ -25,9 +25,9 @@ public class GameController {
     @GetMapping("/game/title/{gameTitle}")
     public Game findByTitle(@PathVariable("gameTitle") String title) { return gameService.findByTitle(title); }
 
-    @GetMapping("/game/rating/{ratingCount:\\d+}")
-    public Game findByRating(@PathVariable("ratingCount") int rating) {
-        return gameService.findByRating(rating);
+    @GetMapping("/game/rating/from/{ratingFrom:\\d+}/to/{ratingTo:\\d+}")
+    public List<Game> findByRating(@PathVariable("ratingFrom") int from, @PathVariable("ratingTo") int to) {
+        return gameService.findByRating(from, to);
     }
 
     @PostMapping ("/game")

@@ -33,4 +33,7 @@ public class CatalogServiceImpl implements CatalogService {
         }
         return catalog;
     }
+
+    @Override
+    public void deleteAll() { catalogRepository.deleteAll(); };
 }

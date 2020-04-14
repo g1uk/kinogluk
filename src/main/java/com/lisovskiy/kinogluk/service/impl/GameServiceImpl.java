@@ -47,12 +47,12 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game findByRating(int rating) {
-        Game game = gameRepository.findByRating(rating);
-        if (game == null) {
-            throw new GameNotFoundException(rating);
+    public List<Game> findByRating(int from, int to) {
+        List<Game> games = gameRepository.findAllByRatingBetween(from, to);
+        if (games.size() == 0) {
+            throw new GameNotFoundException(from, to);
         }
-        return game;
+        return games;
     }
 
     @Override
@@ -60,7 +60,8 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAll();
     }
 
-
+    @Override
+    public void deleteAll() { gameRepository.deleteAll(); };
 
 
 

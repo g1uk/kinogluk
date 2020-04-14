@@ -1,5 +1,6 @@
 package com.lisovskiy.kinogluk.repository;
 
+import com.lisovskiy.kinogluk.entity.Company;
 import com.lisovskiy.kinogluk.entity.Game;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,9 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
 
     List<Game> findAll();
 
-    Game findByRating(int rating);
+    List<Game> findAllByRatingBetween(int from, int to);
 
+    void deleteGamesByCompany();
+
+    void deleteGamesByCompany(Company company);
 }

@@ -3,9 +3,7 @@ package com.lisovskiy;
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.controller.GameController;
 import com.lisovskiy.kinogluk.entity.Catalog;
-import com.lisovskiy.kinogluk.entity.Company;
 import com.lisovskiy.kinogluk.entity.Game;
-import com.lisovskiy.kinogluk.entity.Genre;
 import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
 import io.restassured.RestAssured;
@@ -37,10 +35,7 @@ public class GameControllerTest {
 
     private Game createRandomGame() {
         Game game = new Game();
-        Catalog catalog = new Catalog();
-        Company company = new Company();
-        Genre genre = new Genre();
-        game.setRating((int) Math.random());
+        game.setRating((int) Math.random() * 10);
         game.setShortDescription(randomAlphabetic(50));
         game.setTitle(randomAlphabetic(10));
         game.setReleaseYear(new Date());
