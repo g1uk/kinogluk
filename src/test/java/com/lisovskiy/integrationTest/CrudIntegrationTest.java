@@ -53,7 +53,7 @@ public class CrudIntegrationTest {
 
     @Test
     public void test() {
-        List<Game> byRating = gameService.findByRating(2, 7);
+        List<Game> byRating = gameService.findByRatingBetween(8, 10);
         byRating.forEach(game -> System.out.println(game.getTitle() + " " + game.getRating()));
     }
 

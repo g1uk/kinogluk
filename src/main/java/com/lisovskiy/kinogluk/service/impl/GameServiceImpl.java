@@ -47,8 +47,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> findByRating(int from, int to) {
-        List<Game> games = gameRepository.findAllByRatingBetween(from, to);
+    public List<Game> findByRatingBetween(int from, int to) {
+        List<Game> games = gameRepository.findByRatingBetween(from, to);
         if (games.size() == 0) {
             throw new GameNotFoundException(from, to);
         }

@@ -14,4 +14,6 @@ public interface CatalogRepository extends CrudRepository <Catalog, Integer> {
     Catalog save (Catalog catalog);
 
     Catalog findByTitle (String title);
+
+    void deleteById (int id);
 }

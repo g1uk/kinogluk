@@ -14,7 +14,7 @@ public interface GameService {
 
     Game edit(int id, Game game);
 
-    List<Game> findByRating(int from, int to);
+    List<Game> findByRatingBetween(int from, int to);
 
     List<Game> findAll();
 

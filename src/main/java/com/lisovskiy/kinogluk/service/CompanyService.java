@@ -12,4 +12,6 @@ public interface CompanyService {
     Company findByTitle(String title);
 
     void deleteAll();
+
+    void deleteById(int id);
 }

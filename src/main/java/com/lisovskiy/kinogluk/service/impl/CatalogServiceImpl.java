@@ -36,4 +36,14 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public void deleteAll() { catalogRepository.deleteAll(); };
+
+    @Override
+    public void deleteById(int id) {
+        if (!catalogRepository.existsById(id)) {
+            throw new CatalogNotFoundException(id);
+        }
+        catalogRepository.deleteById(id);
+    }
+
+
 }

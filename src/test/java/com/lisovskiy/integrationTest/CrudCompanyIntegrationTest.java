@@ -23,7 +23,7 @@ public class CrudCompanyIntegrationTest {
         Company company = new Company();
         company.setTitle("Test Company");
         companyService.save(company);
-        company.setTitle("UpdateTest Company");
+        company.setTitle("UpdateTest Company1");
         companyService.save(company);
         List<Company> companies = companyService.findAll();
         assertEquals(1, companies.size());

@@ -36,4 +36,12 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteAll() {
         companyRepository.deleteAll();
     }
+
+    @Override
+    public void deleteById(int id) {
+        if (!companyRepository.existsById(id)) {
+            throw new CompanyNotFoundException(id);
+        }
+        companyRepository.deleteById(id);
+    }
 }

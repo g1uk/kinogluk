@@ -2,6 +2,7 @@ package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,5 +28,11 @@ public class CatalogController {
     @GetMapping("/catalog/{catalogTitle}")
     public Catalog findByTitle (@PathVariable("catalogTitle") String title) {
         return catalogService.findByTitle(title);
+    }
+
+    @PostMapping("/catalog/delete/{catalogId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById (@PathVariable("catalogId") int id) {
+        catalogService.deleteById(id);
     }
 }

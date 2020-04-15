@@ -12,4 +12,6 @@ public interface CatalogService {
     Catalog findByTitle(String title);
 
     void deleteAll();
+
+    void deleteById(int id);
 }

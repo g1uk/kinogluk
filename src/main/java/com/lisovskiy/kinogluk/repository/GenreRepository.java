@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GenreRepository extends CrudRepository <Genre, Long> {
+public interface GenreRepository extends CrudRepository <Genre, Integer> {
 
     List<Genre> findAll ();
     Genre save (Genre genre);
     Genre findByTitle(String title);
+    void deleteById (int id);
 }

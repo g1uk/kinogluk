@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CompanyRepository extends CrudRepository <Company, Long> {
+public interface CompanyRepository extends CrudRepository <Company, Integer> {
 
     List<Company> findAll();
     Company save (Company company);
     Company findByTitle (String title);
+    void deleteById (int id);
 }
