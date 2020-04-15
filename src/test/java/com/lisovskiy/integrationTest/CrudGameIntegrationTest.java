@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +35,11 @@ public class CrudGameIntegrationTest {
         gameService.deleteAll();
         Game game = new Game();
         game.setTitle("Test Game");
-        game.setReleaseYear(new Date());
+        game.setReleaseYear(LocalDate.of(1998, 10, 24));
         game.setRating(10);
         game.setShortDescription("Test Description");
         game.setCatalog(catalogService.findByTitle("UpdateTest Catalog"));
-        game.setCompany(companyService.findByTitle("UpdateTest Company"));
+        game.setCompany(companyService.findByTitle("Test Company"));
         gameService.save(game);
         game.setTitle("UpdateTest Game");
         gameService.save(game);

@@ -10,6 +10,8 @@ public interface GameService {
 
     void deleteById(int id);
 
+    void deleteByTitle(String title);
+
     Game findByTitle(String title);
 
     Game edit(int id, Game game);
@@ -19,4 +21,6 @@ public interface GameService {
     List<Game> findAll();
 
     void deleteAll();
+
+    List<Game> findByReleaseYearBetween(String from, String to);
 }

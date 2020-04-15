@@ -21,6 +21,6 @@ public class CatalogDeleteById {
     public void deleteByIdTest() {
         List<Catalog> catalogs = catalogService.findAll();
         catalogService.deleteById(catalogs.get(1).getCatalogId());
-        assertEquals(1, catalogs.size()-1);
+        assertEquals(catalogs.size()-1, catalogService.findAll().size());
     }
 }

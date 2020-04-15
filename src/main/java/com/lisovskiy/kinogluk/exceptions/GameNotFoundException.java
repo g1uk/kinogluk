@@ -17,4 +17,7 @@ public class GameNotFoundException extends RuntimeException {
     public GameNotFoundException(int from, int to) {
 
     }
+    public GameNotFoundException(String from, String to) {
+        super("Games between " + from + " and " + to + " not found");
+    }
 }

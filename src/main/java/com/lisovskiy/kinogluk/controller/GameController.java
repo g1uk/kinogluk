@@ -30,6 +30,11 @@ public class GameController {
         return gameService.findByRatingBetween(from, to);
     } //todo unbounded message
 
+    @GetMapping("/game/releaseYear/from/{ratingFrom}/to/{ratingTo}")
+    public List<Game> findByReleaseYearBetween(@PathVariable("ratingFrom") String from, @PathVariable("ratingTo") String to) {
+        return gameService.findByReleaseYearBetween(from, to);
+    } //todo unbounded message
+
     @PostMapping ("/game")
     @ResponseStatus(HttpStatus.CREATED)
     public Game add(@RequestBody Game game) {
@@ -45,8 +50,8 @@ public class GameController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("gameId") int id) { gameService.deleteById(id); }
 
-    @GetMapping("/game/{gameTitle}")
-    public String deleteByTitle(@PathVariable String gameTitle) { return "Игра " + gameTitle + " удалена из библиотеки."; }
+    @GetMapping("/game//delete/{gameTitle}")
+    public void deleteByTitle(@PathVariable("gameTitle") String title) { gameService.deleteByTitle(title); }
 
     @GetMapping("/game/{id}/")
     public String ratingUpdate (@RequestBody Game game, @PathVariable int id) { return "Спасибо за Вашу оценку."; }

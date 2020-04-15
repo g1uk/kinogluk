@@ -12,15 +12,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class GameDeleteByIdTest {
+public class GameDeleteByTitleTest {
 
     @Autowired
     GameServiceImpl gameService;
 
     @Test
-    public void deleteByIdTest() {
+    public void deleteByTitleTest() {
         List<Game> games = gameService.findAll();
-        gameService.deleteById(games.get(1).getGameId());
-        assertEquals(games.size()-1, (gameService.findAll().size()));
+        gameService.deleteByTitle(games.get(0).getTitle());
+        assertEquals(games.size()-1, gameService.findAll().size());
     }
 }

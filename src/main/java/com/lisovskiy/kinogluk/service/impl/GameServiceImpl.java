@@ -6,6 +6,9 @@ import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.service.GameService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.List;
 
 @Service
@@ -26,6 +29,11 @@ public class GameServiceImpl implements GameService {
             throw new GameNotFoundException(id);
         }
         gameRepository.deleteById(id); }
+
+    @Override
+    public void deleteByTitle(String title) {
+        gameRepository.deleteByTitle(title);
+    }
 
     @Override
     public Game findByTitle(String title) {
@@ -62,6 +70,18 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void deleteAll() { gameRepository.deleteAll(); };
+
+    @Override
+    public List<Game> findByReleaseYearBetween(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateFrom = LocalDate.parse(from, formatter.withResolverStyle(ResolverStyle.SMART));
+        LocalDate dateTo = LocalDate.parse(to, formatter.withResolverStyle(ResolverStyle.SMART));
+
+        if (dateTo == null || dateFrom == null) {
+            throw new GameNotFoundException(from, to);
+        }
+        return gameRepository.findByReleaseYearBetween(dateFrom, dateTo);
+    }
 
 
 

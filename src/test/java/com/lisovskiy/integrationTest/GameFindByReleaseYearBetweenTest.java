@@ -2,59 +2,37 @@ package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Game;
-import com.lisovskiy.kinogluk.repository.CatalogRepository;
-import com.lisovskiy.kinogluk.repository.CompanyRepository;
 import com.lisovskiy.kinogluk.repository.GameRepository;
-import com.lisovskiy.kinogluk.repository.GenreRepository;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import com.lisovskiy.kinogluk.service.impl.CompanyServiceImpl;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
-import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class CrudIntegrationTest {
-
-    @Autowired
-    GameRepository gameRepository;
+public class GameFindByReleaseYearBetweenTest {
 
     @Autowired
     GameServiceImpl gameService;
 
     @Autowired
-    CatalogRepository catalogRepository;
+    GameRepository gameRepository;
 
     @Autowired
     CatalogServiceImpl catalogService;
 
     @Autowired
-    CompanyRepository companyRepository;
-
-    @Autowired
     CompanyServiceImpl companyService;
 
-    @Autowired
-    GenreRepository genreRepository;
-
-    @Autowired
-    GenreServiceImpl genreService;
-
-
-
-
-
-
-
-
     @Test
-    public void test() {
-        List<Game> byRating = gameService.findByRatingBetween(8, 10);
-        byRating.forEach(game -> System.out.println(game.getTitle() + " " + game.getRating()));
+    public void findByReleaseYearBetween() {
+        List<Game> games = gameService.findByReleaseYearBetween("2000-01-01", "2000-12-12");
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
     }
-
 }

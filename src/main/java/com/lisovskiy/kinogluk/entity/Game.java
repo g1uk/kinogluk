@@ -1,7 +1,7 @@
 package com.lisovskiy.kinogluk.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ public class Game {
     private String shortDescription;
 
     @Column (name = "release_year", nullable = false)
-    private Date releaseYear;
+    private LocalDate releaseYear;
 
     @Column (name = "title", nullable = false, unique = true)
     private String title;
@@ -67,7 +67,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(int rating, String shortDescription, Date releaseYear, String title) {
+    public Game(int rating, String shortDescription, LocalDate releaseYear, String title) {
         this.rating = rating;
         this.shortDescription = shortDescription;
         this.releaseYear = releaseYear;
@@ -90,11 +90,11 @@ public class Game {
         this.shortDescription = shortDescription;
     }
 
-    public Date getReleaseYear() {
+    public LocalDate getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Date releaseYear) {
+    public void setReleaseYear(LocalDate releaseYear) {
         this.releaseYear = releaseYear;
     }
 
