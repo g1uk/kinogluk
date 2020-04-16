@@ -2,6 +2,7 @@ package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.request.CompanyRequest;
 import com.lisovskiy.kinogluk.service.impl.CompanyServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class CrudCompanyIntegrationTest {
         companyService.deleteAll();
         Company company = new Company();
         company.setTitle("Test Company");
-        companyService.save(company);
-        company.setTitle("UpdateTest Company1");
-        companyService.save(company);
+        CompanyRequest request = new CompanyRequest();
+        request.setTitle("New Test Company");
+        companyService.edit(company.getCompanyId(), request);
         List<Company> companies = companyService.findAll();
         assertEquals(1, companies.size());
         System.out.println(companies.get(0).getTitle());

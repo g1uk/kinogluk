@@ -1,20 +1,21 @@
 package com.lisovskiy.kinogluk.service;
 
 import com.lisovskiy.kinogluk.entity.Game;
+import com.lisovskiy.kinogluk.request.GameRequest;
 
 import java.util.List;
 
 public interface GameService {
 
-    Game save(Game game);
+    Game save (GameRequest request);
+
+    Game edit(int id, GameRequest request);
 
     void deleteById(int id);
 
     void deleteByTitle(String title);
 
     Game findByTitle(String title);
-
-    Game edit(int id, Game game);
 
     List<Game> findByRatingBetween(int from, int to);
 

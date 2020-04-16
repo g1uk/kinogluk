@@ -1,6 +1,12 @@
 package com.lisovskiy.kinogluk.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -10,20 +16,29 @@ import java.util.Objects;
 public class Game {
 
     @Id
+    @NotNull
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
     private int gameId;
 
+    @Max(10)
+    @PositiveOrZero
     @Column (name = "rating")
     private int rating;
 
-    @Column (name = "short_description", nullable = false, unique = true)
+    @NotNull
+    @Column (name = "short_description", unique = true)
     private String shortDescription;
 
-    @Column (name = "release_year", nullable = false)
+    @NotNull
+    @PositiveOrZero
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column (name = "release_year")
     private LocalDate releaseYear;
 
-    @Column (name = "title", nullable = false, unique = true)
+    @NotNull
+    @Column (name = "title", unique = true)
     private String title;
 
     @ManyToOne

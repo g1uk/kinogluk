@@ -1,7 +1,7 @@
 package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
-import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ public class GenreFindByTitle {
 
     @Test
     public void findByTitleTest() {
-        Genre genre = new Genre();
-        genre.setTitle("New Genre");
-        genreService.save(genre);
-        assertEquals(genre.getTitle(), (genreService.findByTitle(genre.getTitle()).getTitle()));
+        GenreRequest request = new GenreRequest();
+        request.setTitle("New");
+        genreService.save(request);
+        assertEquals(request.getTitle(), (genreService.findByTitle(request.getTitle()).getTitle()));
     }
 }

@@ -3,6 +3,7 @@ package com.lisovskiy.kinogluk.service.impl;
 import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.exceptions.CatalogNotFoundException;
 import com.lisovskiy.kinogluk.repository.CatalogRepository;
+import com.lisovskiy.kinogluk.request.CatalogRequest;
 import com.lisovskiy.kinogluk.service.CatalogService;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,20 @@ public class CatalogServiceImpl implements CatalogService {
     public List<Catalog> findAll() { return catalogRepository.findAll(); }
 
     @Override
-    public Catalog save (Catalog catalog) {
+    public Catalog save(CatalogRequest request) {
+        Catalog catalog = new Catalog();
+        catalog.setTitle(request.getTitle());
+        return catalogRepository.save(catalog);
+    }
+
+    @Override
+    public Catalog edit (int id, CatalogRequest request) {
+        if (!catalogRepository.existsById(id)) {
+            throw new CatalogNotFoundException(id);
+        }
+        Catalog catalog = new Catalog();
+        catalog.setCatalogId(id);
+        catalog.setTitle(request.getTitle());
         return catalogRepository.save(catalog);
     }
 

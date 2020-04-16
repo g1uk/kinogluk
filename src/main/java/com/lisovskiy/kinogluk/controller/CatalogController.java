@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.request.CatalogRequest;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,18 @@ public class CatalogController {
         this.catalogService = catalogService;
     }
 
-    @GetMapping("/catalog")
+    @GetMapping("/catalogs")
     public List<Catalog> findAll () {return catalogService.findAll();}
 
+    @PostMapping("/catalog")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Catalog add (@RequestBody CatalogRequest request) {
+        return catalogService.save(request);
+    }
+
     @PostMapping("/catalog/{catalogId}")
-    public Catalog add (@RequestBody Catalog catalog) {
-        return catalogService.save(catalog);
+    public Catalog edit(@PathVariable("catalogId") int id, @RequestBody CatalogRequest request) {
+        return catalogService.edit(id, request);
     }
 
     @GetMapping("/catalog/{catalogTitle}")

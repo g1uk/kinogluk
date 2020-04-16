@@ -1,8 +1,10 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Game;
+import com.lisovskiy.kinogluk.request.GameRequest;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,15 +37,15 @@ public class GameController {
         return gameService.findByReleaseYearBetween(from, to);
     } //todo unbounded message
 
-    @PostMapping ("/game")
+    @PostMapping (value = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Game add(@RequestBody Game game) {
-        return gameService.save(game);
+    public Game add(@RequestBody GameRequest request) {
+        return gameService.save(request);
     }
 
     @PostMapping ("/game/{gameId}")
-    public Game edit(@PathVariable("gameId") int id, @RequestBody Game game) {
-        return gameService.edit(id, game);
+    public Game edit(@PathVariable("gameId") int id, @RequestBody GameRequest request) {
+        return gameService.edit(id, request);
     }
 
     @PostMapping("/game/delete/{gameId}")

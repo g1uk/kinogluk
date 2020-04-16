@@ -2,6 +2,7 @@ package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class CrudGenreIntegrationTest {
         genreService.deleteAll();
         Genre genre = new Genre();
         genre.setTitle("Test Genre");
-        genreService.save(genre);
-        genre.setTitle("UpdateTest Genre");
-        genreService.save(genre);
+        GenreRequest request = new GenreRequest();
+        request.setTitle("New Test Genre");
+        genreService.edit(genre.getGenreId(), request);
         List<Genre> genres = genreService.findAll();
         assertEquals(1, genres.size());
         System.out.println(genres.get(0).getTitle());

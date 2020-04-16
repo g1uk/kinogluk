@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.request.CompanyRequest;
 import com.lisovskiy.kinogluk.service.impl.CompanyServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,14 @@ public class CompanyController {
         return companyService.findByTitle(title);
     }
 
-    @PostMapping("company/")
+    @PostMapping("/company")
     @ResponseStatus(HttpStatus.CREATED)
-    public Company add (@RequestBody Company company) { return companyService.save(company);}
+    public Company add (@RequestBody CompanyRequest request) { return companyService.save(request);}
+
+    @PostMapping("/company/{companyId}")
+    public Company edit (@PathVariable("companyId") int id, @RequestBody CompanyRequest request) {
+        return companyService.edit(id, request);
+    }
 
     @PostMapping("/company/delete/{companyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

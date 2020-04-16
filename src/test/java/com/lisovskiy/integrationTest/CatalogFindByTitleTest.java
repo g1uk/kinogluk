@@ -1,7 +1,7 @@
 package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
-import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.request.CatalogRequest;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ public class CatalogFindByTitleTest {
 
     @Test
     public void findByTitleTest() {
-        Catalog catalog = new Catalog();
-        catalog.setTitle("New Catalog4");
-        catalogService.save(catalog);
-        assertEquals(catalog.getTitle(), catalogService.findByTitle(catalog.getTitle()).getTitle());
+        CatalogRequest request = new CatalogRequest();
+        request.setTitle("New");
+        catalogService.save(request);
+        assertEquals(request.getTitle(), catalogService.findByTitle(request.getTitle()).getTitle());
     }
 }

@@ -1,7 +1,7 @@
 package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
-import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.request.CompanyRequest;
 import com.lisovskiy.kinogluk.service.impl.CompanyServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ public class CompanyFindByTitle {
 
     @Test
     public void findByTitleTest() {
-        Company company = new Company();
-        company.setTitle("New Company");
-        companyService.save(company);
-        assertEquals(company.getTitle(), companyService.findByTitle(company.getTitle()).getTitle());
+        CompanyRequest request = new CompanyRequest();
+        request.setTitle("New");
+        companyService.save(request);
+        assertEquals(request.getTitle(), companyService.findByTitle(request.getTitle()).getTitle());
     }
 }

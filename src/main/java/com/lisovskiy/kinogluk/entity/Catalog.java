@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,12 +9,14 @@ import java.util.Objects;
 @Table(name = "catalog", schema = "games_db")
 public class Catalog {
     @Id
+    @NotNull
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "catalog_id", nullable = false)
+    @Column(name = "catalog_id")
     private int catalogId;
 
     @Basic
-    @Column(name = "title", nullable = true)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
     @OneToMany(mappedBy = "catalog")
@@ -40,6 +43,10 @@ public class Catalog {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setCatalogId(int catalogId) {
+        this.catalogId = catalogId;
     }
 
     @Override

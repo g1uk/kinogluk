@@ -1,6 +1,7 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,14 @@ public class GenreController {
         return genreService.findByTitle(title);
     }
 
-    @PostMapping("/genre/{genreId")
-    public Genre add (@RequestBody Genre genre) {return genreService.save(genre);}
+    @PostMapping("/genre")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Genre add (@RequestBody GenreRequest request) {return genreService.save(request);}
+
+    @PostMapping("/genre/{genreId}")
+    public Genre edit (@PathVariable("genreId") int id, @RequestBody GenreRequest request) {
+        return genreService.edit(id, request);
+    }
 
     @PostMapping("/genre/delete/{genreId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -3,6 +3,7 @@ package com.lisovskiy.kinogluk.service.impl;
 import com.lisovskiy.kinogluk.entity.Genre;
 import com.lisovskiy.kinogluk.exceptions.GenreNotFoundException;
 import com.lisovskiy.kinogluk.repository.GenreRepository;
+import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.GenreService;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,22 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre save (Genre genre) {return genreRepository.save(genre);}
+    public Genre save(GenreRequest request) {
+        Genre genre = new Genre();
+        genre.setTitle(request.getTitle());
+        return genreRepository.save(genre);
+    }
+
+    @Override
+    public Genre edit(int id, GenreRequest request) {
+        if (genreRepository.existsById(id)) {
+            throw new GenreNotFoundException(id);
+        }
+        Genre genre = new Genre();
+        genre.setGenreId(id);
+        genre.setTitle(request.getTitle());
+        return genreRepository.save(genre);
+    }
 
     @Override
     public void deleteAll() { genreRepository.deleteAll(); }
