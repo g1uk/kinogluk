@@ -6,6 +6,7 @@ import com.lisovskiy.kinogluk.repository.GenreRepository;
 import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.GenreService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,5 +58,11 @@ public class GenreServiceImpl implements GenreService {
             throw new GenreNotFoundException(id);
         }
         genreRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByTitle(String title) {
+        genreRepository.deleteByTitle(title);
     }
 }

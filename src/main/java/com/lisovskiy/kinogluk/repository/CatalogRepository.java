@@ -3,6 +3,7 @@ package com.lisovskiy.kinogluk.repository;
 import com.lisovskiy.kinogluk.entity.Catalog;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface CatalogRepository extends CrudRepository <Catalog, Integer> {
     Catalog findByTitle (String title);
 
     void deleteById (int id);
+
+    @Transactional
+    void deleteByTitle (String title);
 
 }

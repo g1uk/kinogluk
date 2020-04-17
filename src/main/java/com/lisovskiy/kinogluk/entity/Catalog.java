@@ -2,6 +2,7 @@ package com.lisovskiy.kinogluk.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,10 +17,11 @@ public class Catalog {
 
     @Basic
     @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "catalog")
+    @OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Game> games;
 
     public Catalog() {

@@ -1,11 +1,15 @@
 package com.lisovskiy.kinogluk.service.impl;
 
+import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.entity.Company;
 import com.lisovskiy.kinogluk.entity.Game;
-import com.lisovskiy.kinogluk.exceptions.GameNotFoundException;
+import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.exceptions.*;
 import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.request.GameRequest;
 import com.lisovskiy.kinogluk.service.GameService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +32,8 @@ public class GameServiceImpl implements GameService {
         game.setRating(request.getRating());
         game.setReleaseYear(request.getReleaseYear());
         game.setShortDescription(request.getShortDescription());
+        game.setCatalog(request.getCatalog());
+        game.setCompany(request.getCompany());
         return gameRepository.save(game);
     }
 
@@ -53,6 +59,7 @@ public class GameServiceImpl implements GameService {
         gameRepository.deleteById(id); }
 
     @Override
+    @Transactional
     public void deleteByTitle(String title) {
         gameRepository.deleteByTitle(title);
     }
@@ -70,7 +77,34 @@ public class GameServiceImpl implements GameService {
     public List<Game> findByRatingBetween(int from, int to) {
         List<Game> games = gameRepository.findByRatingBetween(from, to);
         if (games.size() == 0) {
-            throw new GameNotFoundException(from, to);
+            throw new GameWithRatingNotFoundException(from, to);
+        }
+        return games;
+    }
+
+    @Override
+    public List<Game> findGamesByCompany(Company company) {
+        List<Game> games = gameRepository.findGamesByCompany(company);
+        if (games.size() == 0) {
+            throw new GameOfCompanyNotFoundException(company);
+        }
+        return games;
+    }
+
+    @Override
+    public List<Game> findGamesByCatalog(Catalog catalog) {
+        List<Game> games = gameRepository.findGamesByCatalog(catalog);
+        if (games.size() == 0) {
+            throw new GameOfCatalogNotFoundException(catalog);
+        }
+        return games;
+    }
+
+    @Override
+    public List<Game> findGamesByGenre(Genre genre) {
+        List<Game> games = gameRepository.findGamesByGenres(genre);
+        if (games.size() == 0) {
+            throw new GameOfGenreNotFoundException(genre);
         }
         return games;
     }
@@ -90,7 +124,7 @@ public class GameServiceImpl implements GameService {
         LocalDate dateTo = LocalDate.parse(to, formatter.withResolverStyle(ResolverStyle.SMART));
 
         if (dateTo == null || dateFrom == null) {
-            throw new GameNotFoundException(from, to);
+            throw new GameOfReleaseYearNotFoundException(from, to);
         }
         return gameRepository.findByReleaseYearBetween(dateFrom, dateTo);
     }

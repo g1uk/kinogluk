@@ -1,12 +1,16 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.exceptions.CompanyNotFoundException;
 import com.lisovskiy.kinogluk.repository.CompanyRepository;
 import com.lisovskiy.kinogluk.request.CompanyRequest;
 import com.lisovskiy.kinogluk.service.CompanyService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
@@ -18,8 +22,23 @@ public class CompanyServiceImpl implements CompanyService {
         this.companyRepository = companyRepository;
     }
 
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Transactional
+    public Company create(Company company) {
+        for (Game game : company.getGames()
+        ) {
+            game.setCompany(company);
+        }
+        entityManager.persist(company);
+        return company;
+    }
+
     @Override
-    public List<Company> findAll() { return companyRepository.findAll(); }
+    public List<Company> findAll() {
+        return companyRepository.findAll();
+    }
 
     @Override
     public Company save(CompanyRequest request) {
@@ -60,5 +79,11 @@ public class CompanyServiceImpl implements CompanyService {
             throw new CompanyNotFoundException(id);
         }
         companyRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByTitle(String title) {
+        companyRepository.deleteByTitle(title);
     }
 }

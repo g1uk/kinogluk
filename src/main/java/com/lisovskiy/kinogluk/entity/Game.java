@@ -3,10 +3,7 @@ package com.lisovskiy.kinogluk.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -31,13 +28,13 @@ public class Game {
     private String shortDescription;
 
     @NotNull
-    @PositiveOrZero
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column (name = "release_year")
     private LocalDate releaseYear;
 
     @NotNull
+    @Size(min = 2, max = 45)
     @Column (name = "title", unique = true)
     private String title;
 
@@ -65,7 +62,7 @@ public class Game {
         this.catalog = catalog;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "genre",
                 joinColumns = @JoinColumn(name = "game_id"),
                 inverseJoinColumns = @JoinColumn(name = "genre_id"))
@@ -113,8 +110,9 @@ public class Game {
         this.releaseYear = releaseYear;
     }
 
-
-    public int getGameId() { return gameId; }
+    public int getGameId() {
+        return gameId;
+    }
 
     public void setGameId(int gameId) {
         this.gameId = gameId;

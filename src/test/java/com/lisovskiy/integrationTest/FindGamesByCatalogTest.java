@@ -1,8 +1,9 @@
 package com.lisovskiy.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
+import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.entity.Game;
-import com.lisovskiy.kinogluk.repository.GameRepository;
+import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +13,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 @SpringBootTest(classes = KinoglukApplication.class)
-public class GameDeleteByTitleTest {
+public class FindGamesByCatalogTest {
 
     @Autowired
     GameServiceImpl gameService;
 
     @Autowired
-    GameRepository gameRepository;
+    CatalogServiceImpl catalogService;
 
     @Test
-    public void deleteByTitleTest() {
-        List<Game> games = gameService.findAll();
-        System.out.println(games.size());
-        gameService.deleteByTitle("dota2");
-        assertEquals(games.size()-1, gameService.findAll().size());
+    public void findGamesByCatalog() {
+        Catalog catalog = catalogService.findByTitle("Favourite");
+        List<Game> games = gameService.findGamesByCatalog(catalog);
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
     }
+
 }
