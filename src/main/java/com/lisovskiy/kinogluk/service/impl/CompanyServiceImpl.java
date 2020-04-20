@@ -35,6 +35,27 @@ public class CompanyServiceImpl implements CompanyService {
         return company;
     }
 
+    @Transactional
+    public Company update(int id, Company company) {
+        Company original = entityManager.find(Company.class, id);
+        if (original != null) {
+            original.setTitle(company.getTitle());
+            for (Game game : original.getGames()
+                 ) {
+                entityManager.remove(game);
+            }
+            original.getGames().clear();
+            for (Game game : original.getGames()
+                 ) {
+                game.setCompany(original);
+                original.getGames().add(game);
+                entityManager.persist(game);
+            }
+            entityManager.merge(original);
+        }
+        return original;
+    }
+
     @Override
     public List<Company> findAll() {
         return companyRepository.findAll();
@@ -50,7 +71,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company edit(int id, CompanyRequest request) {
-        if (companyRepository.existsById(id)) {
+        if (!companyRepository.existsById(id)) {
             throw new CompanyNotFoundException(id);
         }
         Company company = new Company();

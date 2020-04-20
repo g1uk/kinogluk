@@ -27,54 +27,54 @@ public class GameController {
         return gameService.findAll();
     }
 
-    @GetMapping("/game/title/{gameTitle}")
+    @GetMapping(value = "/game/title/{gameTitle}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Game findByTitle(@PathVariable("gameTitle") String title) {
         return gameService.findByTitle(title);
     }
 
-    @GetMapping("/game/rating/from/{ratingFrom:\\d+}/to/{ratingTo:\\d+}")
+    @GetMapping(value = "/game/rating/from/{ratingFrom:\\d+}/to/{ratingTo:\\d+}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findByRatingBetween(@PathVariable("ratingFrom") int from, @PathVariable("ratingTo") int to) {
         return gameService.findByRatingBetween(from, to);
     } //todo unbounded message
 
-    @GetMapping("/game/releaseYear/from/{ratingFrom}/to/{ratingTo}")
+    @GetMapping(value = "/game/releaseYear/from/{ratingFrom}/to/{ratingTo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findByReleaseYearBetween(@PathVariable("ratingFrom") String from, @PathVariable("ratingTo") String to) {
         return gameService.findByReleaseYearBetween(from, to);
     } //todo unbounded message
 
-    @PostMapping (value = "/game", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping (value = "/game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Game add(@RequestBody GameRequest request) {
         return gameService.save(request);
     }
 
-    @PostMapping (value = "/game/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping (value = "/game/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Game edit(@PathVariable("gameId") int id, @RequestBody GameRequest request) {
         return gameService.edit(id, request);
     }
 
-    @GetMapping("/game/company/{gamesCompany}")
+    @GetMapping(value = "/game/company/{gamesCompany}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findGamesByCompany(@PathVariable("gamesCompany") Company company) {
         return gameService.findGamesByCompany(company);
     }
 
-    @GetMapping("/game/catalog/{gamesCatalog}")
+    @GetMapping(value = "/game/catalog/{gamesCatalog}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findGamesByCatalog(@PathVariable("gamesCatalog") Catalog catalog) {
         return gameService.findGamesByCatalog(catalog);
     }
 
-    @GetMapping("/game/genre/{gamesGenre}")
+    @GetMapping(value = "/game/genre/{gamesGenre}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findGamesByGenre(@PathVariable("gamesGenre") Genre genre) {
         return gameService.findGamesByGenre(genre);
     }
 
-    @PostMapping("/game/delete/{gameId}")
+    @PostMapping(value = "/game/delete/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("gameId") int id) {
         gameService.deleteById(id);
     }
 
-    @PostMapping(value = "/game/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/game/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteByTitle(@RequestBody String title) {
         gameService.deleteByTitle(title);

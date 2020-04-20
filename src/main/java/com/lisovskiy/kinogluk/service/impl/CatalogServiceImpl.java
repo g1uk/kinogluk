@@ -24,6 +24,7 @@ public class CatalogServiceImpl implements CatalogService {
     public CatalogServiceImpl (CatalogRepository catalogRepository) {
         this.catalogRepository = catalogRepository;
     }
+
     @Transactional
     public Catalog create(Catalog catalog) {
         for (Game game : catalog.getGames()
@@ -32,6 +33,27 @@ public class CatalogServiceImpl implements CatalogService {
         }
         entityManager.persist(catalog);
         return catalog;
+    }
+
+    @Transactional
+    public Catalog update(int id, Catalog catalog) {
+        Catalog original = entityManager.find(Catalog.class, id);
+        if (original != null) {
+            original.setTitle(catalog.getTitle());
+            for (Game game : original.getGames()
+                 ) {
+                entityManager.remove(game);
+            }
+            original.getGames().clear();
+            for (Game game : original.getGames()
+                 ) {
+                game.setCatalog(original);
+                original.getGames().add(game);
+                entityManager.persist(game);
+            }
+            entityManager.merge(original);
+        }
+        return original;
     }
 
     @Override
