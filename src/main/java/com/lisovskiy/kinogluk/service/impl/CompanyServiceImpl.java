@@ -4,7 +4,6 @@ import com.lisovskiy.kinogluk.entity.Company;
 import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.exceptions.CompanyNotFoundException;
 import com.lisovskiy.kinogluk.repository.CompanyRepository;
-import com.lisovskiy.kinogluk.request.CompanyRequest;
 import com.lisovskiy.kinogluk.service.CompanyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,29 +55,22 @@ public class CompanyServiceImpl implements CompanyService {
         return original;
     }
 
+    @Transactional
+    public void delete(int id) {
+        Company company = entityManager.find(Company.class, id);
+        if (company != null) {
+            entityManager.remove(company);
+        }
+        else throw new CompanyNotFoundException(id);
+    }
+
     @Override
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
 
     @Override
-    public Company save(CompanyRequest request) {
-        Company company = new Company();
-        company.setTitle(request.getTitle());
-
-        return companyRepository.save(company);
-    }
-
-    @Override
-    public Company edit(int id, CompanyRequest request) {
-        if (!companyRepository.existsById(id)) {
-            throw new CompanyNotFoundException(id);
-        }
-        Company company = new Company();
-        company.setCompanyId(id);
-        company.setTitle(request.getTitle());
-        return companyRepository.save(company);
-    }
+    public Company save(Company company) { return companyRepository.save(company); }
 
     @Override
     public Company findByTitle(String title) {

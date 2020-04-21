@@ -21,7 +21,7 @@ public class Company {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Game> games;
 
     public Company() {

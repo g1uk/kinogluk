@@ -1,7 +1,8 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Game;
+import com.lisovskiy.kinogluk.repository.GameRepository;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class GameDeleteByIdTest {
+public class GameDeleteByTitleTest {
 
     @Autowired
     GameServiceImpl gameService;
 
+    @Autowired
+    GameRepository gameRepository;
+
     @Test
-    public void deleteByIdTest() {
+    public void deleteByTitleTest() {
         List<Game> games = gameService.findAll();
-        gameService.deleteById(games.get(1).getGameId());
-        assertEquals(games.size()-1, (gameService.findAll().size()));
+        System.out.println(games.size());
+        gameService.deleteByTitle("dota2");
+        assertEquals(games.size()-1, gameService.findAll().size());
     }
 }

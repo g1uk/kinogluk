@@ -1,4 +1,4 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Game;
@@ -33,7 +33,6 @@ public class CrudGameIntegrationTest {
 
     @Test
     public void CrudTestGame() {
-        gameService.deleteAll();
         Game game = new Game();
         game.setTitle("Test Game");
         game.setReleaseYear(LocalDate.of(1998, 10, 24));

@@ -1,4 +1,4 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.request.GameRequest;

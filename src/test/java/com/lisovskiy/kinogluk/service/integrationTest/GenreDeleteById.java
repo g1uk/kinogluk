@@ -1,25 +1,26 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
-import com.lisovskiy.kinogluk.request.GenreRequest;
+import com.lisovskiy.kinogluk.entity.Genre;
 import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class GenreFindByTitle {
+public class GenreDeleteById {
 
     @Autowired
     GenreServiceImpl genreService;
 
     @Test
-    public void findByTitleTest() {
-        GenreRequest request = new GenreRequest();
-        request.setTitle("New");
-        genreService.save(request);
-        assertEquals(request.getTitle(), (genreService.findByTitle(request.getTitle()).getTitle()));
+    public void deleteByIdTest() {
+        List<Genre> genres = genreService.findAll();
+        genreService.deleteById(genres.get(1).getGenreId());
+        assertEquals(genres.size()-1, (genreService.findAll().size()));
     }
 }

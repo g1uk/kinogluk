@@ -6,7 +6,6 @@ import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.entity.Genre;
 import com.lisovskiy.kinogluk.exceptions.*;
 import com.lisovskiy.kinogluk.repository.GameRepository;
-import com.lisovskiy.kinogluk.request.GameRequest;
 import com.lisovskiy.kinogluk.service.GameService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,30 +25,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game save(GameRequest request) {
-        Game game = new Game();
-        game.setTitle(request.getTitle());
-        game.setRating(request.getRating());
-        game.setReleaseYear(request.getReleaseYear());
-        game.setShortDescription(request.getShortDescription());
-        game.setCatalog(request.getCatalog());
-        game.setCompany(request.getCompany());
-        return gameRepository.save(game);
-    }
-
-    @Override
-    public Game edit (int id, GameRequest request) {
-        if (gameRepository.existsById(id)) {
-            throw new GameNotFoundException(id);
-        }
-        Game game = new Game();
-        game.setGameId(id);
-        game.setTitle(request.getTitle());
-        game.setRating(request.getRating());
-        game.setReleaseYear(request.getReleaseYear());
-        game.setShortDescription(request.getShortDescription());
-        return gameRepository.save(game);
-    }
+    public Game save (Game game) { return gameRepository.save(game); }
 
     @Override
     public void deleteById(int id) {
@@ -71,6 +47,16 @@ public class GameServiceImpl implements GameService {
             throw new GameNotFoundException(title);
         }
         return game;
+    }
+
+    @Override
+    public Game edit(int id, Game game) {
+        if (!gameRepository.existsById(id)) {
+            throw new GameNotFoundException(id);
+        }
+        game.setGameId(id);
+        game.setTitle(game.getTitle());
+        return gameRepository.save(game);
     }
 
     @Override

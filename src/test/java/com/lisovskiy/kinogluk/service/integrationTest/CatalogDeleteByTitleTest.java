@@ -1,6 +1,5 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
-import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = KinoglukApplication.class)
+@SpringBootTest
 public class CatalogDeleteByTitleTest {
 
     @Autowired
@@ -20,7 +19,7 @@ public class CatalogDeleteByTitleTest {
     @Test
     public void deleteByTitleTest() {
         List<Catalog> catalogs = catalogService.findAll();
-        catalogService.deleteByTitle(catalogs.get(0).getTitle());
+        catalogService.deleteByTitle(catalogs.get(1).getTitle());
         assertEquals(catalogs.size()-1, catalogService.findAll().size());
 
     }

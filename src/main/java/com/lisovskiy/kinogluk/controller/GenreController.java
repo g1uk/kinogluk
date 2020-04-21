@@ -1,7 +1,6 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.lisovskiy.kinogluk.entity.Genre;
-import com.lisovskiy.kinogluk.request.GenreRequest;
 import com.lisovskiy.kinogluk.service.impl.GenreServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,16 +28,8 @@ public class GenreController {
         return genreService.findByTitle(title);
     }
 
-    @PostMapping(value = "/genre", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Genre add (@RequestBody GenreRequest request) {
-        return genreService.save(request);
-    }
-
-    @PostMapping(value = "/genre/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Genre edit (@PathVariable("genreId") int id, @RequestBody GenreRequest request) {
-        return genreService.edit(id, request);
-    }
+    @PostMapping("/genre/{genreId")
+    public Genre add (@RequestBody Genre genre) {return genreService.save(genre);}
 
     @PostMapping(value = "/genre/delete/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)

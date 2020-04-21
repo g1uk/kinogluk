@@ -4,7 +4,6 @@ import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.entity.Company;
 import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.entity.Genre;
-import com.lisovskiy.kinogluk.request.GameRequest;
 import com.lisovskiy.kinogluk.service.impl.GameServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,17 +40,6 @@ public class GameController {
     public List<Game> findByReleaseYearBetween(@PathVariable("ratingFrom") String from, @PathVariable("ratingTo") String to) {
         return gameService.findByReleaseYearBetween(from, to);
     } //todo unbounded message
-
-    @PostMapping (value = "/game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Game add(@RequestBody GameRequest request) {
-        return gameService.save(request);
-    }
-
-    @PostMapping (value = "/game/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Game edit(@PathVariable("gameId") int id, @RequestBody GameRequest request) {
-        return gameService.edit(id, request);
-    }
 
     @GetMapping(value = "/game/company/{gamesCompany}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findGamesByCompany(@PathVariable("gamesCompany") Company company) {

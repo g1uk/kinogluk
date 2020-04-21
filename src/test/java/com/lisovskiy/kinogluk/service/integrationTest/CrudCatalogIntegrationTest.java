@@ -1,8 +1,7 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Catalog;
-import com.lisovskiy.kinogluk.request.CatalogRequest;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,11 @@ public class CrudCatalogIntegrationTest {
     @Test
     public void CrudTestCatalog() {
         catalogService.deleteAll();
-        CatalogRequest request = new CatalogRequest();
-        request.setTitle("Test Catalog");
-        CatalogRequest catalogRequest = new CatalogRequest();
-        catalogRequest.setTitle("New Test catalog");
-        catalogService.edit(catalogService.save(request).getCatalogId(), catalogRequest);
+        Catalog catalog = new Catalog();
+        catalog.setTitle("Test Catalog");
+        Catalog catalog1 = new Catalog();
+        catalog1.setTitle("New Test catalog");
+        catalogService.update(catalogService.create(catalog).getCatalogId(), catalog1);
         List<Catalog> catalogs = catalogService.findAll();
         assertEquals(1, catalogs.size());
         System.out.println(catalogs.get(0).getTitle());

@@ -1,4 +1,4 @@
-package com.lisovskiy.integrationTest;
+package com.lisovskiy.kinogluk.service.integrationTest;
 
 import com.lisovskiy.kinogluk.KinoglukApplication;
 import com.lisovskiy.kinogluk.entity.Company;
@@ -12,16 +12,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = KinoglukApplication.class)
-public class CompanyDeleteByTitleTest {
+public class CompanyDeleteById {
 
     @Autowired
     CompanyServiceImpl companyService;
 
     @Test
-    public void deleteByTitleTest() {
+    public void deleteByIdTest() {
         List<Company> companies = companyService.findAll();
-        companyService.deleteByTitle(companies.get(0).getTitle());
-        assertEquals(companies.size()-1, companyService.findAll().size());
+        companyService.deleteById(companies.get(1).getCompanyId());
+        assertEquals(companies.size()-1, (companyService.findAll().size()));
     }
-
 }
