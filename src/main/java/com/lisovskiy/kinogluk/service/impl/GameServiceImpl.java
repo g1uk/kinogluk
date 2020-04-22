@@ -54,9 +54,13 @@ public class GameServiceImpl implements GameService {
         if (!gameRepository.existsById(id)) {
             throw new GameNotFoundException(id);
         }
-        game.setGameId(id);
-        game.setTitle(game.getTitle());
-        return gameRepository.save(game);
+        Game original = new Game();
+        original.setShortDescription(game.getShortDescription());
+        original.setReleaseYear(game.getReleaseYear());
+        original.setRating(game.getRating());
+        original.setTitle(game.getTitle());
+        gameRepository.save(original);
+        return original;
     }
 
     @Override

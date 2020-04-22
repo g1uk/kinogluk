@@ -30,6 +30,16 @@ public class GenreServiceImpl implements GenreService {
         return genre;
     }
 
+    public Genre update (int id, Genre genre) {
+        if (!genreRepository.existsById(id)) {
+            throw new GenreNotFoundException(id);
+        }
+        Genre original = new Genre();
+        original.setTitle(genre.getTitle());
+        genreRepository.save(original);
+        return original;
+    }
+
     @Override
     public Genre save (Genre genre) {return genreRepository.save(genre);}
 

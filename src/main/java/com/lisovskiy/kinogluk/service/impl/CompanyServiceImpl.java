@@ -1,7 +1,6 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Company;
-import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.exceptions.CompanyNotFoundException;
 import com.lisovskiy.kinogluk.repository.CompanyRepository;
 import com.lisovskiy.kinogluk.service.CompanyService;
@@ -26,10 +25,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Transactional
     public Company create(Company company) {
-        for (Game game : company.getGames()
-        ) {
-            game.setCompany(company);
-        }
         entityManager.persist(company);
         return company;
     }
@@ -39,17 +34,6 @@ public class CompanyServiceImpl implements CompanyService {
         Company original = entityManager.find(Company.class, id);
         if (original != null) {
             original.setTitle(company.getTitle());
-            for (Game game : original.getGames()
-                 ) {
-                entityManager.remove(game);
-            }
-            original.getGames().clear();
-            for (Game game : original.getGames()
-                 ) {
-                game.setCompany(original);
-                original.getGames().add(game);
-                entityManager.persist(game);
-            }
             entityManager.merge(original);
         }
         return original;

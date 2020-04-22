@@ -1,5 +1,8 @@
 package com.lisovskiy.kinogluk.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -7,13 +10,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "genre", schema = "games_db")
 public class Genre {
     @Id
-    @NotNull
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "genre_id")
-    private int genreId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Basic
     @NotNull
@@ -39,12 +43,12 @@ public class Genre {
         this.title = title;
     }
 
-    public int getGenreId() {
-        return genreId;
+    public int getId() {
+        return id;
     }
 
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -62,7 +66,7 @@ public class Genre {
 
         Genre that = (Genre) o;
 
-        if (genreId != that.genreId) return false;
+        if (id != that.id) return false;
         if (!Objects.equals(title, that.title)) return false;
 
         return true;
@@ -70,7 +74,7 @@ public class Genre {
 
     @Override
     public int hashCode() {
-        int result = genreId;
+        int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }

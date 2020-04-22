@@ -20,7 +20,7 @@ public class GameDeleteByIdTest {
     @Test
     public void deleteByIdTest() {
         List<Game> games = gameService.findAll();
-        gameService.deleteById(games.get(1).getGameId());
+        gameService.deleteById(games.get(1).getId());
         assertEquals(games.size()-1, (gameService.findAll().size()));
     }
 }

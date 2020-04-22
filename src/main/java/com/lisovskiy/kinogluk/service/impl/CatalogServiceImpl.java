@@ -1,7 +1,6 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Catalog;
-import com.lisovskiy.kinogluk.entity.Game;
 import com.lisovskiy.kinogluk.exceptions.CatalogNotFoundException;
 import com.lisovskiy.kinogluk.repository.CatalogRepository;
 import com.lisovskiy.kinogluk.service.CatalogService;
@@ -26,10 +25,6 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Transactional
     public Catalog create(Catalog catalog) {
-        for (Game game : catalog.getGames()
-             ) {
-            game.setCatalog(catalog);
-        }
         entityManager.persist(catalog);
         return catalog;
     }
@@ -39,17 +34,6 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog original = entityManager.find(Catalog.class, id);
         if (original != null) {
             original.setTitle(catalog.getTitle());
-            for (Game game : original.getGames()
-                 ) {
-                entityManager.remove(game);
-            }
-            original.getGames().clear();
-            for (Game game : original.getGames()
-                 ) {
-                game.setCatalog(original);
-                original.getGames().add(game);
-                entityManager.persist(game);
-            }
             entityManager.merge(original);
         }
         return original;

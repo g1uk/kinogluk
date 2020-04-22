@@ -31,10 +31,6 @@ public class Catalog {
         return games;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
     public int getCatalogId() {
         return catalogId;
     }

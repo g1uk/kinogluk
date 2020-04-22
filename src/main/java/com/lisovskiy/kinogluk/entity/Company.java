@@ -35,10 +35,6 @@ public class Company {
         return games;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
-    }
-
     public String getTitle() {
         return title;
     }

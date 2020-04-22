@@ -1,5 +1,7 @@
 package com.lisovskiy.kinogluk.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,14 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table (name = "game", schema = "games_db")
 public class Game {
 
     @Id
-    @NotNull
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "game_id")
-    private int gameId;
+    @Column(name = "id", nullable = false)
+    private int id;
 
     @Max(10)
     @PositiveOrZero
@@ -62,10 +65,11 @@ public class Game {
         this.catalog = catalog;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "genre",
-                joinColumns = @JoinColumn(name = "game_id"),
-                inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ManyToMany(cascade = CascadeType.ALL)//(cascade = CascadeType.ALL)
+    @JoinTable(name = "HAS",
+                joinColumns = @JoinColumn(name = "game_genre_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "genre_game_id", referencedColumnName = "id"))
+
     private List<Genre> genres;
 
     public List<Genre> getGenres() {
@@ -110,12 +114,12 @@ public class Game {
         this.releaseYear = releaseYear;
     }
 
-    public int getGameId() {
-        return gameId;
+    public int getId() {
+        return id;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -131,7 +135,7 @@ public class Game {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return gameId == game.gameId &&
+        return id == game.id &&
                 rating == game.rating &&
                 shortDescription.equals(game.shortDescription) &&
                 releaseYear.equals(game.releaseYear) &&
@@ -140,6 +144,6 @@ public class Game {
 
     @Override
     public int hashCode() {
-        return Objects.hash(gameId, rating, shortDescription, releaseYear, title);
+        return Objects.hash(id, rating, shortDescription, releaseYear, title);
     }
 }
