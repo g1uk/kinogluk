@@ -65,8 +65,8 @@ public class Game {
         this.catalog = catalog;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)//(cascade = CascadeType.ALL)
-    @JoinTable(name = "HAS",
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "HAS", catalog = "entity",
                 joinColumns = @JoinColumn(name = "game_genre_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "genre_game_id", referencedColumnName = "id"))
 
