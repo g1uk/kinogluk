@@ -7,10 +7,15 @@ import com.lisovskiy.kinogluk.service.GenreService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 public class GenreServiceImpl implements GenreService {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     GenreRepository genreRepository;
 
@@ -20,6 +25,12 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Genre> findAll() { return genreRepository.findAll(); }
+
+    @Transactional
+    public Genre create(Genre genre) {
+        entityManager.merge(genre);
+        return genre;
+    }
 
     @Override
     public Genre findByTitle (String title) {

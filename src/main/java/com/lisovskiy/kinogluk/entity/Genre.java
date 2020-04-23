@@ -3,11 +3,12 @@ package com.lisovskiy.kinogluk.entity;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @DynamicInsert
@@ -16,7 +17,7 @@ import java.util.Objects;
 public class Genre {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private int id;
 
     @Basic
@@ -25,17 +26,19 @@ public class Genre {
     @Column(name = "title")
     private String title;
 
+    @Nullable
     @ManyToMany(mappedBy = "genres")
-    private List<Game> games;
+    private Set<Game> games;
 
     public Genre() {
     }
 
-    public List<Game> getGames() {
+    @Nullable
+    public Set<Game> getGames() {
         return games;
     }
 
-    public void setGames(List<Game> games) {
+    public void setGames(Set<Game> games) {
         this.games = games;
     }
 

@@ -10,6 +10,8 @@ import com.lisovskiy.kinogluk.service.GameService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
@@ -17,6 +19,9 @@ import java.util.List;
 
 @Service
 public class GameServiceImpl implements GameService {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     private final GameRepository gameRepository;
 
@@ -26,6 +31,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game save (Game game) { return gameRepository.save(game); }
+
+    @Transactional
+    public Game create(Game game) {
+        entityManager.merge(game);
+        return game;
+    }
 
     @Override
     public void deleteById(int id) {

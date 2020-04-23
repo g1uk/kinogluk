@@ -4,11 +4,12 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @DynamicInsert
@@ -18,7 +19,7 @@ public class Game {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private int id;
 
     @Max(10)
@@ -38,7 +39,7 @@ public class Game {
 
     @NotNull
     @Size(min = 2, max = 45)
-    @Column (name = "title", unique = true)
+    @Column (name = "title")
     private String title;
 
     @ManyToOne
@@ -66,17 +67,19 @@ public class Game {
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "HAS", catalog = "entity",
-                joinColumns = @JoinColumn(name = "game_genre_id", referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name = "genre_game_id", referencedColumnName = "id"))
+    @JoinTable(name = "game_genre",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 
-    private List<Genre> genres;
+    @Nullable
+    private Set<Genre> genres;
 
-    public List<Genre> getGenres() {
+    @Nullable
+    public Set<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
 
