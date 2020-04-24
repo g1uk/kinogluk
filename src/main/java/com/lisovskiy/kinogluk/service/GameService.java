@@ -14,7 +14,7 @@ public interface GameService {
 
     Game findByTitle(String title);
 
-    Game edit(int id, Game game);
+    Game update(int id, Game game);
 
     List<Game> findByRatingBetween(int from, int to);
     List<Game> findGamesByCompany(Company company);

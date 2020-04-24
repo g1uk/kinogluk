@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @DynamicInsert
@@ -28,17 +28,17 @@ public class Genre {
 
     @Nullable
     @ManyToMany(mappedBy = "genres")
-    private Set<Game> games;
+    private List<Game> games;
 
     public Genre() {
     }
 
     @Nullable
-    public Set<Game> getGames() {
+    public List<Game> getGames() {
         return games;
     }
 
-    public void setGames(Set<Game> games) {
+    public void setGames(List<Game> games) {
         this.games = games;
     }
 

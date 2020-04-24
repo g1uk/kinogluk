@@ -60,17 +60,20 @@ public class GameServiceImpl implements GameService {
         return game;
     }
 
-    @Override
-    public Game edit(int id, Game game) {
-        if (!gameRepository.existsById(id)) {
-            throw new GameNotFoundException(id);
+    @Transactional
+    public Game update(int id, Game game) {
+        Game original = entityManager.find(Game.class, id);
+        if (original != null) {
+            original.setTitle(game.getTitle());
+            original.setRating(game.getRating());
+            original.setReleaseYear(game.getReleaseYear());
+            original.setShortDescription(game.getShortDescription());
+            original.setCatalog(game.getCatalog());
+            original.setCompany(game.getCompany());
+            original.setGenres(game.getGenres());
+            entityManager.merge(original);
         }
-        Game original = new Game();
-        original.setShortDescription(game.getShortDescription());
-        original.setReleaseYear(game.getReleaseYear());
-        original.setRating(game.getRating());
-        original.setTitle(game.getTitle());
-        gameRepository.save(original);
+
         return original;
     }
 

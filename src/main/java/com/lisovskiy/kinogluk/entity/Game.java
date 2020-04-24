@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @DynamicInsert
@@ -42,8 +42,8 @@ public class Game {
     @Column (name = "title")
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
     private Company company;
 
     public Company getCompany() {
@@ -54,8 +54,8 @@ public class Game {
         this.company = company;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "catalogs_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalogs_id")
     private Catalog catalog;
 
     public Catalog getCatalog() {
@@ -72,14 +72,14 @@ public class Game {
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 
     @Nullable
-    private Set<Genre> genres;
+    private List<Genre> genres;
 
     @Nullable
-    public Set<Genre> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<Genre> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 

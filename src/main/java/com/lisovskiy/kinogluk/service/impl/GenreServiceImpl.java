@@ -41,13 +41,14 @@ public class GenreServiceImpl implements GenreService {
         return genre;
     }
 
+    @Transactional
     public Genre update (int id, Genre genre) {
-        if (!genreRepository.existsById(id)) {
-            throw new GenreNotFoundException(id);
+        Genre original = entityManager.find(Genre.class, id);
+        if (original != null) {
+            original.setTitle(genre.getTitle());
+            //original.setGames(genre.getGames());
+            entityManager.merge(original);
         }
-        Genre original = new Genre();
-        original.setTitle(genre.getTitle());
-        genreRepository.save(original);
         return original;
     }
 
