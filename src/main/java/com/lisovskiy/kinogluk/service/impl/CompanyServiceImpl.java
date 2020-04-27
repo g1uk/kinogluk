@@ -34,6 +34,17 @@ public class CompanyServiceImpl implements CompanyService {
         Company original = entityManager.find(Company.class, id);
         if (original != null) {
             original.setTitle(company.getTitle());
+//            for (Game game : original.getGames()
+//                 ) {
+//                entityManager.remove(game);
+//            }
+//            original.getGames().clear();
+//            for (Game game : company.getGames()
+//                 ) {
+//                game.setCompany(original);
+//                original.getGames().add(game);
+//                entityManager.persist(game);
+//            }
             entityManager.merge(original);
         }
         return original;

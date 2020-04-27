@@ -68,9 +68,9 @@ public class GameServiceImpl implements GameService {
             original.setRating(game.getRating());
             original.setReleaseYear(game.getReleaseYear());
             original.setShortDescription(game.getShortDescription());
-            original.setCatalog(game.getCatalog());
-            original.setCompany(game.getCompany());
-            original.setGenres(game.getGenres());
+//            original.setCatalog(game.getCatalog());
+//            original.setCompany(game.getCompany());
+//            original.setGenres(game.getGenres());
             entityManager.merge(original);
         }
 
