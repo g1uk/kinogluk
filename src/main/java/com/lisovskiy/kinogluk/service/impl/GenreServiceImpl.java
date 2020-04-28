@@ -17,7 +17,7 @@ public class GenreServiceImpl implements GenreService {
     @PersistenceContext
     EntityManager entityManager;
 
-    GenreRepository genreRepository;
+     private final GenreRepository genreRepository;
 
     public GenreServiceImpl (GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
@@ -28,7 +28,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     public Genre create(Genre genre) {
-        entityManager.merge(genre);
+        entityManager.persist(genre);
         return genre;
     }
 
@@ -46,9 +46,9 @@ public class GenreServiceImpl implements GenreService {
         Genre original = entityManager.find(Genre.class, id);
         if (original != null) {
             original.setTitle(genre.getTitle());
-            //original.setGames(genre.getGames());
             entityManager.merge(original);
         }
+        else throw new GenreNotFoundException(id);
         return original;
     }
 

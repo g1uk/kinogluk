@@ -1,8 +1,5 @@
 package com.lisovskiy.kinogluk.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,11 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Table(name = "genre", schema = "games_db")
 public class Genre {
     @Id
+    @NotNull
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
@@ -50,8 +46,8 @@ public class Genre {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int genreId) {
+        this.id = genreId;
     }
 
     public String getTitle() {

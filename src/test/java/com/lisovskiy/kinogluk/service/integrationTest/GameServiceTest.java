@@ -37,25 +37,22 @@ public class GameServiceTest {
     public void create() {
 
         Catalog catalog = new Catalog();
-        catalog.setTitle("played");
-        catalogService.save(catalog);
+        catalog.setTitle("playing");
 
         Genre genre = new Genre();
-        genre.setTitle("test genre22");
-        genreService.save(genre);
+        genre.setTitle("Card battle");
         System.out.println(genre.getTitle());
         List<Genre> genres = new ArrayList<>();
         genres.add(genre);
 
         Company company = new Company();
-        company.setTitle("test company");
-        companyService.save(company);
+        company.setTitle("Blizzard");
 
         Game game = new Game();
-        game.setShortDescription("test descriptionsefh");
-        game.setRating(2);
-        game.setReleaseYear(LocalDate.of(2000, 1, 1));
-        game.setTitle("test game");
+        game.setShortDescription("Collection card game");
+        game.setRating(8);
+        game.setReleaseYear(LocalDate.of(2013, 4, 15));
+        game.setTitle("Hearthstone");
         game.setCatalog(catalog);
         game.setCompany(company);
         List<Game> games = new ArrayList<>();
@@ -65,7 +62,6 @@ public class GameServiceTest {
         System.out.println(genre.getTitle());
         genre.setGames(games);
 
-        genreService.create(genre);
         gameService.create(game);
 
         assertEquals(game.getTitle(), (gameService.findByTitle(game.getTitle()).getTitle()));
@@ -81,56 +77,90 @@ public class GameServiceTest {
     public void update() {
         Catalog catalog = new Catalog();
         catalog.setTitle("Best RPG games");
-        //catalogService.save(catalog);
-
-        Genre genre = new Genre();
-        genre.setTitle("rpg");
-        //genreService.save(genre);
-        System.out.println(genre.getTitle());
-        List<Genre> genres = new ArrayList<>();
-        genres.add(genre);
 
         Company company = new Company();
         company.setTitle("cd red project");
-        //companyService.save(company);
+
+        Genre genre = new Genre();
+        genre.setTitle("rpg");
+        System.out.println(genre.getTitle());
+        List<Genre> genres = new ArrayList<>();
+        genres.add(genre);
 
         Game game = new Game();
         game.setShortDescription("BEST RPG IN the WORLD");
         game.setRating(10);
         game.setReleaseYear(LocalDate.of(2010, 2, 6));
         game.setTitle("Witcher 3");
-        catalogService.update(catalogService.findAll().get(4).getCatalogId(), catalog);
-        companyService.update(companyService.findAll().get(4).getCompanyId(), company);
+        catalogService.update(catalogService.findAll().get(0).getCatalogId(), catalog);
+        companyService.update(companyService.findAll().get(0).getCompanyId(), company);
         game.setCatalog(catalog);
         game.setCompany(company);
+
         List<Game> games = new ArrayList<>();
         games.add(game);
 
         game.setGenres(genres);
         System.out.println(genre.getTitle());
         genre.setGames(games);
-        //genreService.save(genre);
 
+        genreService.update(genreService.findAll().get(0).getId(), genre);
 
-
-
-        genreService.update(genreService.findAll().get(4).getId(), genre);
-
-        gameService.update(gameService.findAll().get(4).getId(), game);
-
-        //assertEquals(game.getTitle(), gameService.edit(allGames.get(0).getId(), game).getTitle());
-//        assertEquals(company.getTitle(), companyService.update(companyService.findAll().get(0).getCompanyId(), company).getTitle());
-//        assertEquals(catalog.getTitle(), catalogService.update(catalogService.findAll().get(0).getCatalogId(), catalog).getTitle());
-//        assertEquals(genre.getTitle(), genreService.update(genreService.findAll().get(0).getId(), genre).getTitle());
-
+        gameService.update(gameService.findAll().get(0).getId(), game);
     }
 
     @Test
     public void delete() {
         //create();
         int result = gameService.findAll().size();
-        gameService.deleteById(gameService.findAll().get(4).getId());
+        gameService.deleteById(gameService.findAll().get(0).getId());
         assertEquals(result-1, gameService.findAll().size());
+    }
+
+    @Test
+    public void deleteByTitleTest() {
+        //List<Game> games = gameService.findAll();
+        int result = gameService.findAll().size();
+        gameService.deleteByTitle(gameService.findAll().get(0).getTitle());
+        assertEquals(result-1, gameService.findAll().size());
+    }
+
+    @Test
+    public void findGamesByCatalog() {
+        Catalog catalog = catalogService.findByTitle("playing");
+        List<Game> games = gameService.findGamesByCatalog(catalog);
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
+    }
+
+    @Test
+    public void findGamesByCompanyTest() {
+        Company company = companyService.findByTitle("Blizzard");
+        System.out.println(company.getTitle());
+        List<Game> games = gameService.findGamesByCompany(company);
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
+    }
+
+    @Test
+    public void findGamesByGenreTest() {
+        Genre genre = genreService.findByTitle("rpg");
+        List<Game> games = gameService.findGamesByGenre(genre);
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
+    }
+
+    @Test
+    public void finByRatingBetweenTest() {
+        List<Game> games = gameService.findByRatingBetween(7, 9);
+        assertEquals(1, games.size());
+    }
+
+    @Test
+    public void findByReleaseYearBetween() {
+        List<Game> games = gameService.findByReleaseYearBetween("2010-01-01", "2010-12-12");
+        assertEquals(1, games.size());
+        System.out.println(games.get(0).getTitle());
     }
 
 }

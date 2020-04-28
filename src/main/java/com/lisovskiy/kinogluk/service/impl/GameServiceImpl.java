@@ -34,7 +34,7 @@ public class GameServiceImpl implements GameService {
 
     @Transactional
     public Game create(Game game) {
-        entityManager.merge(game);
+        entityManager.persist(game);
         return game;
     }
 

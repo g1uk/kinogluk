@@ -1,7 +1,5 @@
 package com.lisovskiy.kinogluk.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.annotation.Nullable;
@@ -12,8 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Table (name = "game", schema = "games_db")
 public class Game {
 

@@ -41,7 +41,7 @@ public class GenreServiceTest {
         genreService.create(genre);
         Genre original = new Genre();
         original.setTitle(newTitle);
-        assertEquals(original.getTitle(), genreService.update(genre.getId(), original).getTitle());
+        assertEquals(newTitle, genreService.update(genre.getId(), original).getTitle());
     }
 
     @Test

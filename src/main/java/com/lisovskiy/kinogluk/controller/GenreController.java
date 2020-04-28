@@ -42,4 +42,9 @@ public class GenreController {
     public void deleteByTitle (@RequestBody String title) {
         genreService.deleteByTitle(title);
     }
+
+    @PostMapping(value = "/genre/update/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update (@PathVariable("genreId") int id, @RequestBody Genre genre) {
+        genreService.update(id, genre);
+    }
 }
