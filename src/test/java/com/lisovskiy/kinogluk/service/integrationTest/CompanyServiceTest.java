@@ -73,4 +73,14 @@ public class CompanyServiceTest {
             companyService.findByTitle(title);
         });
     }
+
+    @Test
+    public void findByTitle() {
+        String title = "counter strike";
+        Company company = new Company();
+        company.setTitle(title);
+        companyService.create(company);
+        assertEquals(title, companyService.findByTitle(title).getTitle());
+
+    }
 }

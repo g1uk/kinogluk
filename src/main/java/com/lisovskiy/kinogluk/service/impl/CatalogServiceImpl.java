@@ -54,11 +54,6 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Catalog save (Catalog catalog) {
-        return catalogRepository.save(catalog);
-    }
-
-    @Override
     public Catalog findByTitle(String title) {
         Catalog catalog = catalogRepository.findByTitle(title);
         if (catalog == null) {
@@ -67,16 +62,7 @@ public class CatalogServiceImpl implements CatalogService {
         return catalog;
     }
 
-    @Override
     public void deleteAll() { catalogRepository.deleteAll(); };
-
-    @Override
-    public void deleteById(int id) {
-        if (!catalogRepository.existsById(id)) {
-            throw new CatalogNotFoundException(id);
-        }
-        catalogRepository.deleteById(id);
-    }
 
     @Override
     @Transactional

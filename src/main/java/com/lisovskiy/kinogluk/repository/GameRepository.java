@@ -14,10 +14,6 @@ import java.util.List;
 @Repository
 public interface GameRepository extends CrudRepository<Game, Integer> {
 
-    Game save(Game game);
-
-    void deleteById (int id);
-
     Game findByTitle(String title);
 
     List<Game> findAll();

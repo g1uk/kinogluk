@@ -29,21 +29,19 @@ public class GameServiceImpl implements GameService {
         this.gameRepository = gameRepository;
     }
 
-    @Override
-    public Game save (Game game) { return gameRepository.save(game); }
-
     @Transactional
     public Game create(Game game) {
         entityManager.persist(game);
         return game;
     }
 
-    @Override
-    public void deleteById(int id) {
-        if (!gameRepository.existsById(id)) {
-            throw new GameNotFoundException(id);
-        }
-        gameRepository.deleteById(id); }
+    @Transactional
+    public void delete(int id) {
+        Game game = entityManager.find(Game.class, id);
+        if (game != null) {
+            entityManager.remove(game);
+        } else throw new GameNotFoundException(id);
+    }
 
     @Override
     @Transactional
@@ -68,9 +66,6 @@ public class GameServiceImpl implements GameService {
             original.setRating(game.getRating());
             original.setReleaseYear(game.getReleaseYear());
             original.setShortDescription(game.getShortDescription());
-//            original.setCatalog(game.getCatalog());
-//            original.setCompany(game.getCompany());
-//            original.setGenres(game.getGenres());
             entityManager.merge(original);
         }
 
@@ -118,7 +113,6 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAll();
     }
 
-    @Override
     public void deleteAll() { gameRepository.deleteAll(); };
 
     @Override

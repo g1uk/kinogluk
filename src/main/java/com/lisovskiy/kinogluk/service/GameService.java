@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface GameService {
 
-    Game save(Game game);
-
     Game findByTitle(String title);
 
     Game update(int id, Game game);
@@ -22,8 +20,6 @@ public interface GameService {
     List<Game> findGamesByGenre(Genre genre);
     List<Game> findByReleaseYearBetween(String from, String to);
     List<Game> findAll();
-    void deleteById(int id);
-    void deleteAll();
 
     @Transactional
     void deleteByTitle(String title);

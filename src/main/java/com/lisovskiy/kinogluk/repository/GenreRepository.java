@@ -11,9 +11,7 @@ import java.util.List;
 public interface GenreRepository extends CrudRepository <Genre, Integer> {
 
     List<Genre> findAll ();
-    Genre save (Genre genre);
     Genre findByTitle(String title);
-    void deleteById (int id);
     @Transactional
     void deleteByTitle (String title);
 }

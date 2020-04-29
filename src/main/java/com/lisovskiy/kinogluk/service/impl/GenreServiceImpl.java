@@ -32,6 +32,15 @@ public class GenreServiceImpl implements GenreService {
         return genre;
     }
 
+    @Transactional
+    public void delete(int id) {
+        Genre genre = entityManager.find(Genre.class, id);
+        if (genre != null) {
+            entityManager.remove(genre);
+        }
+        else throw new GenreNotFoundException(id);
+    }
+
     @Override
     public Genre findByTitle (String title) {
         Genre genre = genreRepository.findByTitle(title);
@@ -52,19 +61,7 @@ public class GenreServiceImpl implements GenreService {
         return original;
     }
 
-    @Override
-    public Genre save (Genre genre) {return genreRepository.save(genre);}
-
-    @Override
     public void deleteAll() { genreRepository.deleteAll(); }
-
-    @Override
-    public void deleteById(int id) {
-        if (!genreRepository.existsById(id)) {
-            throw new GenreNotFoundException(id);
-        }
-        genreRepository.deleteById(id);
-    }
 
     @Override
     @Transactional

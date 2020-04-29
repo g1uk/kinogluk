@@ -11,9 +11,7 @@ import java.util.List;
 public interface CompanyRepository extends CrudRepository <Company, Integer> {
 
     List<Company> findAll();
-    Company save (Company company);
     Company findByTitle (String title);
-    void deleteById (int id);
     @Transactional
     void deleteByTitle (String title);
 }

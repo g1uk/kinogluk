@@ -59,7 +59,7 @@ public class GameController {
     @PostMapping(value = "/game/delete/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("gameId") int id) {
-        gameService.deleteById(id);
+        gameService.delete(id);
     }
 
     @PostMapping(value = "/game/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

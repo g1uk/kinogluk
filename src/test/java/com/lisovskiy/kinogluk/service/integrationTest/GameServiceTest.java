@@ -111,15 +111,14 @@ public class GameServiceTest {
 
     @Test
     public void delete() {
-        //create();
+        create();
         int result = gameService.findAll().size();
-        gameService.deleteById(gameService.findAll().get(0).getId());
+        gameService.delete(gameService.findAll().get(0).getId());
         assertEquals(result-1, gameService.findAll().size());
     }
 
     @Test
     public void deleteByTitleTest() {
-        //List<Game> games = gameService.findAll();
         int result = gameService.findAll().size();
         gameService.deleteByTitle(gameService.findAll().get(0).getTitle());
         assertEquals(result-1, gameService.findAll().size());

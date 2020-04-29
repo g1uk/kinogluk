@@ -12,11 +12,7 @@ public interface CatalogRepository extends CrudRepository <Catalog, Integer> {
 
     List<Catalog> findAll();
 
-    Catalog save (Catalog catalog);
-
     Catalog findByTitle (String title);
-
-    void deleteById (int id);
 
     @Transactional
     void deleteByTitle (String title);

@@ -4,6 +4,7 @@ import com.lisovskiy.kinogluk.entity.Catalog;
 import com.lisovskiy.kinogluk.service.impl.CatalogServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,16 @@ public class CatalogController {
         this.catalogService = catalogService;
     }
 
-    @GetMapping("/catalog")
-    public List<Catalog> findAll () {return catalogService.findAll();}
+    //public CatalogController() {}
+
+    @GetMapping(value = "/catalog", produces = MediaType.APPLICATION_JSON_VALUE)//, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Catalog>> findAll () {
+        return ResponseEntity.ok(catalogService.findAll());
+    }
 
     @PostMapping("/catalog/{catalogId}")
     public Catalog add (@RequestBody Catalog catalog) {
-        return catalogService.save(catalog);
+        return catalogService.create(catalog);
     }
 
     @GetMapping("/catalog/{catalogTitle}")
@@ -34,7 +39,7 @@ public class CatalogController {
     @PostMapping(value = "/catalog/{catalogId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById (@PathVariable("catalogId") int id) {
-        catalogService.deleteById(id);
+        catalogService.delete(id);
     }
 
     @PostMapping(value = "/catalog/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

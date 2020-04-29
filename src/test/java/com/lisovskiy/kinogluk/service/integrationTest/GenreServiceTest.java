@@ -49,11 +49,11 @@ public class GenreServiceTest {
         String title = "Test genre";
         Genre genre = new Genre();
         genre.setTitle(title);
-        genreService.save(genre);
+        genreService.create(genre);
         int genreId = genre.getId();
         Genre insertedGenre = genreService.findByTitle(title);
         assertNotNull(insertedGenre);
-        genreService.deleteById(genreId);
+        genreService.delete(genreId);
         assertThrows(GenreNotFoundException.class, () -> {
            genreService.findByTitle(title);
         });
@@ -71,5 +71,15 @@ public class GenreServiceTest {
         assertThrows(GenreNotFoundException.class, () -> {
            genreService.findByTitle(title);
         });
+    }
+
+    @Test
+    public void findByTitle() {
+        String title = "MMORPG";
+        Genre genre = new Genre();
+        genre.setTitle(title);
+        genreService.create(genre);
+        assertEquals(title, genreService.findByTitle(title).getTitle());
+
     }
 }

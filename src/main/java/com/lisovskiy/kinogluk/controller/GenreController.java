@@ -29,12 +29,12 @@ public class GenreController {
     }
 
     @PostMapping("/genre/{genreId")
-    public Genre add (@RequestBody Genre genre) {return genreService.save(genre);}
+    public Genre add (@RequestBody Genre genre) {return genreService.create(genre);}
 
     @PostMapping(value = "/genre/delete/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById (@PathVariable("genreId") int id) {
-        genreService.deleteById(id);
+        genreService.delete(id);
     }
 
     @PostMapping(value = "/genre/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

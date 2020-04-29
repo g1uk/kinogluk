@@ -31,7 +31,7 @@ public class CompanyController {
     @PostMapping(value = "/company/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById (@PathVariable("companyId") int id) {
-        companyService.deleteById(id);
+        companyService.delete(id);
     }
 
     @PostMapping(value = "/company/delete", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
