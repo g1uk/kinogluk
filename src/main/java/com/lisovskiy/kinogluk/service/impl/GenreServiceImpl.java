@@ -1,6 +1,8 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Genre;
+import com.lisovskiy.kinogluk.exceptions.GenreDoesNotExistsException;
+import com.lisovskiy.kinogluk.exceptions.GenreIsAlreadyExistsException;
 import com.lisovskiy.kinogluk.exceptions.GenreNotFoundException;
 import com.lisovskiy.kinogluk.repository.GenreRepository;
 import com.lisovskiy.kinogluk.service.GenreService;
@@ -28,7 +30,13 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     public Genre create(Genre genre) {
-        entityManager.persist(genre);
+        List<Genre> genres = genreRepository.findAll();
+        for (Genre temp : genres
+             ) {
+            if (temp.getTitle().equals(genre.getTitle())) {
+                throw new GenreIsAlreadyExistsException(genre.getTitle());
+            } else entityManager.persist(genre);
+        }
         return genre;
     }
 
@@ -38,7 +46,7 @@ public class GenreServiceImpl implements GenreService {
         if (genre != null) {
             entityManager.remove(genre);
         }
-        else throw new GenreNotFoundException(id);
+        else throw new GenreDoesNotExistsException(id);
     }
 
     @Override
@@ -56,8 +64,7 @@ public class GenreServiceImpl implements GenreService {
         if (original != null) {
             original.setTitle(genre.getTitle());
             entityManager.merge(original);
-        }
-        else throw new GenreNotFoundException(id);
+        } else throw new GenreDoesNotExistsException(id);
         return original;
     }
 
@@ -66,6 +73,13 @@ public class GenreServiceImpl implements GenreService {
     @Override
     @Transactional
     public void deleteByTitle(String title) {
-        genreRepository.deleteByTitle(title);
+        List<Genre> genres = genreRepository.findAll();
+        for (Genre temp : genres
+             ) {
+            if (temp.getTitle().equals(title)) {
+                genreRepository.deleteByTitle(title);
+            } else throw new GenreDoesNotExistsException(title);
+        }
+
     }
 }

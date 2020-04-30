@@ -36,12 +36,12 @@ public class GameController {
         return gameService.findByRatingBetween(from, to);
     } //todo unbounded message
 
-    @GetMapping(value = "/game/releaseYear/from/{ratingFrom}/to/{ratingTo}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Game> findByReleaseYearBetween(@PathVariable("ratingFrom") String from, @PathVariable("ratingTo") String to) {
+    @GetMapping(value = "/game/releaseYear/from/{releaseYearFrom}/to/{releaseYearTo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Game> findByReleaseYearBetween(@PathVariable("releaseYearFrom") String from, @PathVariable("releaseYearTo") String to) {
         return gameService.findByReleaseYearBetween(from, to);
     } //todo unbounded message
 
-    @GetMapping(value = "/game/company/{gamesCompany}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/game/company/{gamesCompany}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> findGamesByCompany(@PathVariable("gamesCompany") Company company) {
         return gameService.findGamesByCompany(company);
     }
@@ -56,7 +56,18 @@ public class GameController {
         return gameService.findGamesByGenre(genre);
     }
 
-    @PostMapping(value = "/game/delete/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/game/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create (@RequestBody Game game) {
+        gameService.create(game);
+    }
+
+    @PostMapping(value = "/game/update/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update (@PathVariable("gameId") int id, @RequestBody Game game) {
+        gameService.update(id, game);
+    }
+
+    @PostMapping(value = "/game/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("gameId") int id) {
         gameService.delete(id);

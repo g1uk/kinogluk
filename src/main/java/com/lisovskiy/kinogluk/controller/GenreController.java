@@ -28,10 +28,13 @@ public class GenreController {
         return genreService.findByTitle(title);
     }
 
-    @PostMapping("/genre/{genreId")
-    public Genre add (@RequestBody Genre genre) {return genreService.create(genre);}
+    @PostMapping(value = "/genre/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create (@RequestBody Genre genre) {
+        genreService.create(genre);
+    }
 
-    @PostMapping(value = "/genre/delete/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/genre/{genreId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById (@PathVariable("genreId") int id) {
         genreService.delete(id);

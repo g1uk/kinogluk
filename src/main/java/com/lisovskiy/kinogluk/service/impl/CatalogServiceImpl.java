@@ -1,6 +1,8 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.exceptions.CatalogDoesNotExistsException;
+import com.lisovskiy.kinogluk.exceptions.CatalogIsAlreadyExistsException;
 import com.lisovskiy.kinogluk.exceptions.CatalogNotFoundException;
 import com.lisovskiy.kinogluk.repository.CatalogRepository;
 import com.lisovskiy.kinogluk.service.CatalogService;
@@ -25,7 +27,13 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Transactional
     public Catalog create(Catalog catalog) {
-        entityManager.persist(catalog);
+        List<Catalog> catalogs = catalogRepository.findAll();
+        for (Catalog temp : catalogs
+             ) {
+            if (temp.getTitle().equals(catalog.getTitle())) {
+                throw new CatalogIsAlreadyExistsException(catalog.getTitle());
+            } else entityManager.persist(catalog);
+        }
         return catalog;
     }
 
@@ -35,7 +43,7 @@ public class CatalogServiceImpl implements CatalogService {
         if (original != null) {
             original.setTitle(catalog.getTitle());
             entityManager.merge(original);
-        }
+        } else throw new CatalogDoesNotExistsException(id);
         return original;
     }
 
@@ -45,7 +53,7 @@ public class CatalogServiceImpl implements CatalogService {
         if (catalog != null) {
             entityManager.remove(catalog);
         }
-        else throw new CatalogNotFoundException(id);
+        else throw new CatalogDoesNotExistsException(id);
     }
 
     @Override
@@ -67,7 +75,14 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional
     public void deleteByTitle(String title) {
-        catalogRepository.deleteByTitle(title);
+        List<Catalog> catalogs = catalogRepository.findAll();
+        for (Catalog temp : catalogs
+             ) {
+            if (temp.getTitle().equals(title)) {
+                catalogRepository.deleteByTitle(title);
+            } else throw new CatalogDoesNotExistsException(title);
+        }
+
     }
 
 

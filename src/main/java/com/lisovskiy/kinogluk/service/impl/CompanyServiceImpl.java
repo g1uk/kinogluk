@@ -1,6 +1,8 @@
 package com.lisovskiy.kinogluk.service.impl;
 
 import com.lisovskiy.kinogluk.entity.Company;
+import com.lisovskiy.kinogluk.exceptions.CompanyDoesNotExistsException;
+import com.lisovskiy.kinogluk.exceptions.CompanyIsAlreadyExistsException;
 import com.lisovskiy.kinogluk.exceptions.CompanyNotFoundException;
 import com.lisovskiy.kinogluk.repository.CompanyRepository;
 import com.lisovskiy.kinogluk.service.CompanyService;
@@ -25,7 +27,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Transactional
     public Company create(Company company) {
-        entityManager.persist(company);
+        List<Company> companies = companyRepository.findAll();
+        for (Company temp : companies
+             ) {
+            if (temp.getTitle().equals(company.getTitle())) {
+                throw new CompanyIsAlreadyExistsException(company.getTitle());
+            } else entityManager.persist(company);
+        }
         return company;
     }
 
@@ -35,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (original != null) {
             original.setTitle(company.getTitle());
             entityManager.merge(original);
-        }
+        } else throw new CompanyDoesNotExistsException(id);
         return original;
     }
 
@@ -45,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (company != null) {
             entityManager.remove(company);
         }
-        else throw new CompanyNotFoundException(id);
+        else throw new CompanyDoesNotExistsException(id);
     }
 
     @Override
@@ -69,6 +77,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public void deleteByTitle(String title) {
-        companyRepository.deleteByTitle(title);
+        List<Company> companies = companyRepository.findAll();
+        for (Company temp : companies
+             ) {
+            if (temp.getTitle().equals(title)) {
+                companyRepository.deleteByTitle(title);
+            } else throw new CompanyDoesNotExistsException(title);
+        }
+
     }
 }

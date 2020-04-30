@@ -41,9 +41,14 @@ public class CompanyController {
     }
 
     @PostMapping(value = "/company/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public void create (@RequestBody Company company) {
         companyService.create(company);
+    }
+
+    @PostMapping(value = "/company/update/{companyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update (@PathVariable("companyId") int id, @RequestBody Company company) {
+        companyService.update(id, company);
     }
 
 }

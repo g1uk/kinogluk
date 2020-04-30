@@ -19,7 +19,7 @@ public class CatalogServiceTest {
 
     @Test
     public void create() {
-        String title = "Want play";
+        String title = "favourite";
         Catalog catalog = new Catalog();
         catalog.setTitle(title);
         catalogService.create(catalog);

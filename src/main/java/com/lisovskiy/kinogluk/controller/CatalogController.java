@@ -26,14 +26,14 @@ public class CatalogController {
         return ResponseEntity.ok(catalogService.findAll());
     }
 
-    @PostMapping("/catalog/{catalogId}")
-    public Catalog add (@RequestBody Catalog catalog) {
-        return catalogService.create(catalog);
-    }
-
     @GetMapping("/catalog/{catalogTitle}")
     public Catalog findByTitle (@PathVariable("catalogTitle") String title) {
         return catalogService.findByTitle(title);
+    }
+
+    @PostMapping("/catalog/update/{catalogId}")
+    public Catalog update (@PathVariable("catalogId") int id, @RequestBody Catalog catalog) {
+        return catalogService.update(id, catalog);
     }
 
     @PostMapping(value = "/catalog/{catalogId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -41,7 +41,6 @@ public class GameServiceTest {
 
         Genre genre = new Genre();
         genre.setTitle("Card battle");
-        System.out.println(genre.getTitle());
         List<Genre> genres = new ArrayList<>();
         genres.add(genre);
 
@@ -52,7 +51,7 @@ public class GameServiceTest {
         game.setShortDescription("Collection card game");
         game.setRating(8);
         game.setReleaseYear(LocalDate.of(2013, 4, 15));
-        game.setTitle("Hearthstone");
+        game.setTitle("NHL");
         game.setCatalog(catalog);
         game.setCompany(company);
         List<Game> games = new ArrayList<>();
@@ -120,7 +119,7 @@ public class GameServiceTest {
     @Test
     public void deleteByTitleTest() {
         int result = gameService.findAll().size();
-        gameService.deleteByTitle(gameService.findAll().get(0).getTitle());
+        gameService.deleteByTitle(gameService.findAll().get(2).getTitle());
         assertEquals(result-1, gameService.findAll().size());
     }
 
@@ -135,7 +134,6 @@ public class GameServiceTest {
     @Test
     public void findGamesByCompanyTest() {
         Company company = companyService.findByTitle("Blizzard");
-        System.out.println(company.getTitle());
         List<Game> games = gameService.findGamesByCompany(company);
         assertEquals(1, games.size());
         System.out.println(games.get(0).getTitle());

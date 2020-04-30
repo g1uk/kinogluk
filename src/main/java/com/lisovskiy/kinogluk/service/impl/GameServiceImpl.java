@@ -31,7 +31,14 @@ public class GameServiceImpl implements GameService {
 
     @Transactional
     public Game create(Game game) {
-        entityManager.persist(game);
+        List<Game> games = gameRepository.findAll();
+        for (Game temp : games
+             ) {
+            if (temp.getTitle().equals(game.getTitle())) {
+                throw new GameIsAlreadyExistsException(game.getTitle());
+            } else entityManager.persist(game);
+        }
+
         return game;
     }
 
@@ -40,13 +47,19 @@ public class GameServiceImpl implements GameService {
         Game game = entityManager.find(Game.class, id);
         if (game != null) {
             entityManager.remove(game);
-        } else throw new GameNotFoundException(id);
+        } else throw new GameDoesNotExistsException(id);
     }
 
     @Override
     @Transactional
     public void deleteByTitle(String title) {
-        gameRepository.deleteByTitle(title);
+        List<Game> games = gameRepository.findAll();
+        for (Game temp : games
+             ) {
+            if (temp.getTitle().equals(title)) {
+                gameRepository.deleteByTitle(title);
+            } else throw new GameDoesNotExistsException(title);
+        }
     }
 
     @Override
@@ -67,7 +80,7 @@ public class GameServiceImpl implements GameService {
             original.setReleaseYear(game.getReleaseYear());
             original.setShortDescription(game.getShortDescription());
             entityManager.merge(original);
-        }
+        } else throw new GameDoesNotExistsException(id);
 
         return original;
     }

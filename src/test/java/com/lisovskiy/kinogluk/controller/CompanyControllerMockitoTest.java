@@ -1,7 +1,7 @@
 package com.lisovskiy.kinogluk.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lisovskiy.kinogluk.entity.Catalog;
+import com.lisovskiy.kinogluk.entity.Company;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,12 +13,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@ExtendWith(SpringExtension.class)
-//@WebMvcTest(controllers = CatalogController.class)
-//@OverrideAutoConfiguration(enabled = true)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CatalogControllerMockitoTest {
+public class CompanyControllerMockitoTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -26,39 +23,18 @@ public class CatalogControllerMockitoTest {
     @Autowired
     ObjectMapper objectMapper;
 
-//    @Autowired
-//    private CatalogController catalogController;
-//
-//    @Autowired
-//    private CatalogServiceImpl catalogService;
-//
-//    @Before
-//    public void setUp() {
-//        catalogService = Mockito.mock(CatalogServiceImpl.class);
-//        catalogController = new CatalogController(catalogService);
-//        mockMvc = standaloneSetup(catalogController).build();
-//    }
-//
-//    @After
-//    public void tearDown() {
-//        mockMvc = null;
-//        catalogController = null;
-//        catalogService = null;
-//    }
-
     @Test
     public void findAllTest() throws Exception {
-        mockMvc.perform(get("/v1/games/catalog")
-                .contentType("application/json"))
+        mockMvc.perform(get("/v1/games/company")
+        .contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk());
-//                .andExpect(jsonPath("$.catalog").exists())
-//                .andExpect(jsonPath("$.catalog[*].catalogId").isNotEmpty());
     }
 
     @Test
-    public void findByTitle() throws Exception {
-        mockMvc.perform(get("/v1/games/catalog/{catalogTitle}", "Best rpg games")
+    public void findByTitleTest() throws Exception {
+        String title = "cd red project";
+        mockMvc.perform(get("/v1/games/company/{companyTitle}", title)
         .contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -66,18 +42,19 @@ public class CatalogControllerMockitoTest {
 
     @Test
     public void createTest() throws Exception {
-        Catalog catalog = new Catalog();
-        catalog.setTitle("want to play");
-        mockMvc.perform(post("/v1/games/catalog/create")
-                .contentType("application/json")
-        .content(objectMapper.writeValueAsString(catalog)))
+        Company company = new Company();
+        company.setTitle("Guerilla");
+        mockMvc.perform(post("/v1/games/company/create")
+        .contentType("application/json")
+        .content(objectMapper.writeValueAsString(company)))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
 
     @Test
     public void deleteByIdTest() throws Exception {
-        mockMvc.perform(post("/v1/games/catalog/{catalogId}", 67)
+        int id = 63;
+        mockMvc.perform(post("/v1/games/company/{companyId}", id)
         .contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -85,8 +62,8 @@ public class CatalogControllerMockitoTest {
 
     @Test
     public void deleteByTitleTest() throws Exception {
-        String title = "want to play";
-        mockMvc.perform(post("/v1/games/catalog/delete")
+        String title = "Guerilla";
+        mockMvc.perform(post("/v1/games/company/delete")
         .contentType("application/json")
         .content(title))
                 .andDo(print())
@@ -95,14 +72,16 @@ public class CatalogControllerMockitoTest {
 
     @Test
     public void updateTest() throws Exception {
-        String title = "favourite";
-        int id = 62;
-        Catalog catalog = new Catalog();
-        catalog.setTitle(title);
-        mockMvc.perform(post("/v1/games/catalog/update/{catalogId}", id)
+        String title = "Santa Monica";
+        int id = 61;
+        Company company = new Company();
+        company.setTitle(title);
+        mockMvc.perform(post("/v1/games/company/update/{companyId}", id)
         .contentType("application/json")
-        .content(objectMapper.writeValueAsString(catalog)))
+        .content(objectMapper.writeValueAsString(company)))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+
 }
